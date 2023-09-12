@@ -1,4 +1,4 @@
-package LecturaDesdeCSV;
+package LecturaCSV;
 
 public class Person {
 	

@@ -1,4 +1,4 @@
-package LecturaDesdeCSV;
+package LecturaCSV;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,13 +12,13 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class LecturaFicheros {
 	public static void main(String [] args) throws IOException {
 		Scanner sc=new Scanner(System.in);
 		List<Person> people=new ArrayList<Person>();
-		LeerDesdeCSV(people);
+		String PATH="block1-process-file-and-streams/src/main/java/LecturaCSV/people.csv";
+		LeerDesdeCSV(people, PATH);
 		System.out.println("--------Lista Entera\r\n");
 		for(Person per:people) {
 			System.out.println(per.toString());
@@ -55,9 +55,9 @@ public class LecturaFicheros {
 		
 	} 
 	
-	public static void LeerDesdeCSV(List<Person> people) throws IOException {
+	public static void LeerDesdeCSV(List<Person> people, String PATH) throws IOException {
 		try {
-			Path path = Paths.get("C:\\Users\\rauldan.haiduc\\Desktop\\people.csv");
+			Path path = Paths.get(PATH).toAbsolutePath();
 			BufferedReader reader = Files.newBufferedReader(path);
 			String line = reader.readLine();
 			int lineasLeidas=1;

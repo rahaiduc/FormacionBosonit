@@ -18,7 +18,7 @@ public class LecturaFicheros {
 		Scanner sc=new Scanner(System.in);
 		List<Person> people=new ArrayList<Person>();
 		String PATH="block1-process-file-and-streams/src/main/java/LecturaCSV/people.csv";
-		LeerDesdeCSV(people, PATH);
+		people=LeerDesdeCSV( PATH);
 		System.out.println("--------Lista Entera\r\n");
 		for(Person per:people) {
 			System.out.println(per.toString());
@@ -55,7 +55,8 @@ public class LecturaFicheros {
 		
 	} 
 	
-	public static void LeerDesdeCSV(List<Person> people, String PATH) throws IOException {
+	public static List<Person> LeerDesdeCSV(String PATH) throws IOException {
+		List<Person> people=new ArrayList<Person>();
 		try {
 			Path path = Paths.get(PATH).toAbsolutePath();
 			BufferedReader reader = Files.newBufferedReader(path);
@@ -95,6 +96,7 @@ public class LecturaFicheros {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
+		return people;
 	
 	}
 }

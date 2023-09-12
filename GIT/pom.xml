@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>Maven</artifactId>
+    <artifactId>block3-maven-package</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -23,7 +23,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>GIT/src/main/java/git/EmpaquetarProyectoGit.java</mainClass>
+                            <mainClass>git.EmpaquetarProyectoGit</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

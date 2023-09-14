@@ -16,7 +16,7 @@ public class BeanPropiedades implements CommandLineRunner{
     @Value("${my.number}")
     private String Number;
     private String newProperty;
-    private
+
     BeanPropiedades(@Value("${new.property:new property no tiene valor}") String newProperty){
         this.newProperty=newProperty;
     }

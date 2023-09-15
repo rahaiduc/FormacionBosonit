@@ -1,4 +1,4 @@
-  greeting: Hello world!
+  greeting1: Hello world!
   my:
-    number: 100
-  NEW_PROPERTY: new.property no tiene valor
+    number1: 1001111
+  NEW_PROPERTY1: new.property no tiene valor

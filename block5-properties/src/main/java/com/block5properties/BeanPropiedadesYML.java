@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:application.yml")
 public class BeanPropiedadesYML implements CommandLineRunner {
 
-    @Value("${greeting}")
+    @Value("${greeting1}")
     private String greeting;
 
-    @Value("${my.number}")
+    @Value("${my.number1}")
     private String Number;
 
-    @Value("${NEW_PROPERTY}")
+    @Value("${NEW_PROPERTY1}")
     private String newProperty;
 
     @Value("${MYURL: No_existe}")

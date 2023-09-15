@@ -10,5 +10,8 @@ public class TerceraClase implements CommandLineRunner {
     @Override
     public void run( String... args) throws Exception {
         System.out.println("Soy la tercera clase");
+        for (String arg : args) {
+            System.out.println("Parámetro: " + arg);
+        }
     }
 }

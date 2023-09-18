@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" procOnly="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="block3-create-repo-git" />
+        <module name="block4-libreries" />
+        <module name="block1-process-file-and-streams" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="block3-maven-package" target="20" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

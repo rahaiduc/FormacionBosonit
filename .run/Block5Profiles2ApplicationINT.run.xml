@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Block5Profiles2ApplicationINT" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+    <module name="block5-profiles2" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.block5profiles2.Block5Profiles2Application" />
+    <option name="VM_PARAMETERS" value="-Dspring.profiles.active=INT" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

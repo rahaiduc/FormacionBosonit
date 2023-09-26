@@ -61,15 +61,10 @@ public class Controller1 {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PersonOutputDto> updatePerson(@PathVariable int id,@RequestBody JSONObject json) {
+    public ResponseEntity<PersonOutputDto> updatePerson(@PathVariable int id,@RequestBody PersonInputDto person) {
         try {
-            PersonOutputDto per=personService.getPersonById(id);
-            String name=(String) json.get("name")!=null ? (String)json.get("name") : per.getName();
-            String edad=(String) json.get("edad")!=null ? (String)json.get("edad") : per.getEdad();
-            String poblacion=(String) json.get("poblacion")!=null ? (String)json.get("poblacion") : per.getPoblacion();
-            PersonInputDto persona=new PersonInputDto(id,name,edad,poblacion);
-            System.out.println("hola"+id+name+edad+poblacion);
-            return ResponseEntity.ok().body(personService.updatePerson(persona));
+            person.setId(id);
+            return ResponseEntity.ok().body(personService.updatePerson(person));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

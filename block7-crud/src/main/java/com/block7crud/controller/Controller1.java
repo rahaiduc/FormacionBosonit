@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -38,26 +39,37 @@ public class Controller1 {
         try {
             return ResponseEntity.ok().body(personService.getPersonById(id));
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            throw e;
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deletePersonById(@RequestParam int id) {
+    @GetMapping("/nombre/{nombre}")
+    public List<Persona> getPersonById(@PathVariable String nombre) {
         try {
-            personService.deletePersonById(id);
-            return ResponseEntity.ok().body("person with id: "+id+" was deleted");
+            return personService.getPersonByName(nombre);
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            throw e;
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<PersonOutputDto> deletePersonById(@PathVariable int id) {
+        try {
+            PersonOutputDto pod=personService.getPersonById(id);
+            personService.deletePersonById(id);
+            return ResponseEntity.ok().body(pod);
+        } catch (Exception e) {
+            throw e;
         }
     }
 
     @GetMapping
-    public Iterable<PersonOutputDto> getAllPerson(
-            @RequestParam(defaultValue = "0", required = false) int pageNumber,
-            @RequestParam(defaultValue = "4", required = false) int pageSize) {
-
-        return personService.getAllPersons(pageNumber, pageSize);
+    public List<Persona> getAllPerson() {
+        try{
+            return personService.getAllPersons();
+        }catch (Exception e){
+            throw e;
+        }
     }
 
     @PutMapping("/{id}")
@@ -66,7 +78,7 @@ public class Controller1 {
             person.setId(id);
             return ResponseEntity.ok().body(personService.updatePerson(person));
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            throw e;
         }
     }
 

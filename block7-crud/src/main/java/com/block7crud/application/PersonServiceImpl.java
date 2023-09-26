@@ -29,6 +29,10 @@ public class PersonServiceImpl implements PersonService{
                 .personToPersonOutputDto();
     }
 
+    public List<Persona> getPersonByName(String nombre){
+        return personRepository.findByName(nombre).stream().toList();
+    }
+
     @Override
     public void deletePersonById(int id) {
         personRepository.findById(id).orElseThrow();
@@ -40,6 +44,9 @@ public class PersonServiceImpl implements PersonService{
         return personRepository.findAll(pageRequest).getContent()
                 .stream()
                 .map(Persona::personToPersonOutputDto).toList();
+    }
+    public List<Persona> getAllPersons() {
+        return personRepository.findAll().stream().toList();
     }
     @Override
     public PersonOutputDto updatePerson(PersonInputDto person) {

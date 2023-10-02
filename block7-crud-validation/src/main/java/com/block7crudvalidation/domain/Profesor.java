@@ -19,8 +19,8 @@ public class Profesor {
     private String id_profesor;
 
     @OneToOne
-    @JoinColumn(name = "Persona",nullable = false,unique = true)
-    private Persona id_persona;
+    @JoinColumn(name = "id_persona",nullable = false,unique = true)
+    private Persona persona;
 
     private String coments;
 

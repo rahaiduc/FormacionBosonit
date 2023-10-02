@@ -21,7 +21,12 @@ public class Asignatura {
 
     private String asignatura;
 
-    @ManyToMany(mappedBy = "id_student")
+    @ManyToMany
+    @JoinTable(
+            name = "asignatura_student",
+            joinColumns = @JoinColumn(name = "asignatura_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
     private List<Student> students;
 
     private String coments;

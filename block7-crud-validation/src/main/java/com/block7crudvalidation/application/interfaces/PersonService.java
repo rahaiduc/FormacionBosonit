@@ -5,8 +5,8 @@ import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
 
 public interface PersonService {
     PersonOutputDto addPerson(PersonInputDto person);
-    PersonOutputDto getPersonById(int id);
-    void deletePersonById( int id);
+    PersonOutputDto getPersonById(String id);
+    void deletePersonById(String id);
     Iterable<PersonOutputDto> getAllPersons(int pageNumber, int pageSize);
     PersonOutputDto updatePerson(PersonInputDto person);
 }

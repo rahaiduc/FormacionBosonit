@@ -5,8 +5,8 @@ import com.block7crudvalidation.controller.dto.outputs.ProfesorOutputDto;
 
 public interface ProfesorService {
     ProfesorOutputDto addProfesor(ProfesorInputDto Profesor);
-    ProfesorOutputDto getProfesorById(int id);
-    void deleteProfesorById( int id);
+    ProfesorOutputDto getProfesorById(String id);
+    void deleteProfesorById( String id);
     Iterable<ProfesorOutputDto> getAllProfesors(int pageNumber, int pageSize);
     ProfesorOutputDto updateProfesor(ProfesorInputDto Profesor);
 }

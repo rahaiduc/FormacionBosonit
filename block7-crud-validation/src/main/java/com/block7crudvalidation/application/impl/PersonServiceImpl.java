@@ -41,8 +41,8 @@ public class PersonServiceImpl implements PersonService {
                 .personToPersonOutputDto();
     }
     @Override
-    public PersonOutputDto getPersonById(int id){
-        return personRepository.findById(id).orElseThrow()
+    public PersonOutputDto getPersonById(String id){
+        return personRepository.findById(Integer.valueOf(id)).orElseThrow()
                 .personToPersonOutputDto();
     }
 
@@ -51,9 +51,9 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public void deletePersonById(int id) {
-        personRepository.findById(id).orElseThrow();
-        personRepository.deleteById(id);
+    public void deletePersonById(String id) {
+        personRepository.findById(Integer.valueOf(id)).orElseThrow();
+        personRepository.deleteById(Integer.valueOf(id));
     }
     @Override
     public List<PersonOutputDto> getAllPersons(int pageNumber, int pageSize) {
@@ -67,7 +67,7 @@ public class PersonServiceImpl implements PersonService {
     }
     @Override
     public PersonOutputDto updatePerson(PersonInputDto person) {
-        personRepository.findById(person.getId_persona()).orElseThrow();
+        personRepository.findById(Integer.valueOf(person.getId_persona())).orElseThrow();
         return personRepository.save(new Persona(person))
                 .personToPersonOutputDto();
     }

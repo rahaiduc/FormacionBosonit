@@ -3,7 +3,9 @@ package com.block7crudvalidation.application.impl;
 import com.block7crudvalidation.application.interfaces.AsignaturaService;
 import com.block7crudvalidation.controller.dto.inputs.AsignaturaInputDto;
 import com.block7crudvalidation.controller.dto.outputs.AsignaturaOutputDto;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AsignaturaServiceImpl implements AsignaturaService {
 
     @Override
@@ -12,12 +14,12 @@ public class AsignaturaServiceImpl implements AsignaturaService {
     }
 
     @Override
-    public AsignaturaOutputDto getAsignaturaById(int id) {
+    public AsignaturaOutputDto getAsignaturaById(String id) {
         return null;
     }
 
     @Override
-    public void deleteAsignaturaById(int id) {
+    public void deleteAsignaturaById(String id) {
 
     }
 

@@ -2,9 +2,7 @@ package com.block7crudvalidation.domain;
 
 import com.block7crudvalidation.controller.dto.inputs.PersonInputDto;
 import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,10 +15,10 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Persona {
-    @jakarta.persistence.Id
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id_persona;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id_persona")
+    private String id_persona;
     private String usuario;
     private String password;
     private String name;
@@ -33,13 +31,15 @@ public class Persona {
     private String imagen_url;
     private Date termination_date;
 
-    public void setId(Integer id) {
-        this.id_persona= id;
-    }
 
-    public Integer getId() {
-        return this.id_persona;
-    }
+    @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Student student;
+    @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Profesor profesor;
+    @jakarta.persistence.Id
+    private String id;
+
+
 
     public Persona(PersonInputDto personInputDto) {
         this.id_persona = personInputDto.getId_persona();
@@ -65,6 +65,10 @@ public class Persona {
                 this.company_email,
                 this.active
         );
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 }

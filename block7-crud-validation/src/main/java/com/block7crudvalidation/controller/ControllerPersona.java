@@ -38,7 +38,7 @@ public class ControllerPersona {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PersonOutputDto> getPersonById(@PathVariable int id) {
+    public ResponseEntity<PersonOutputDto> getPersonById(@PathVariable String id) {
         try {
             return ResponseEntity.ok().body(personService.getPersonById(id));
         } catch (Exception e) {
@@ -65,7 +65,7 @@ public class ControllerPersona {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<PersonOutputDto> deletePersonById(@PathVariable int id) {
+    public ResponseEntity<PersonOutputDto> deletePersonById(@PathVariable String id) {
         try {
             PersonOutputDto pod=personService.getPersonById(id);
             personService.deletePersonById(id);
@@ -76,7 +76,7 @@ public class ControllerPersona {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PersonOutputDto> updatePerson(@PathVariable int id,@RequestBody PersonInputDto person) {
+    public ResponseEntity<PersonOutputDto> updatePerson(@PathVariable String id,@RequestBody PersonInputDto person) {
         try {
             person.setId_persona(id);
             return ResponseEntity.ok().body(personService.updatePerson(person));

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonOutputDto {
-    private int id_persona;
+    private String id_persona;
     private String usuario;
     private String name;
     private String surname;

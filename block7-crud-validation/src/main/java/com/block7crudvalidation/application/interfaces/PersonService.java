@@ -1,8 +1,7 @@
-package com.block7crudvalidation.application;
+package com.block7crudvalidation.application.interfaces;
 
-import com.block7crudvalidation.controller.dto.PersonInputDto;
-import com.block7crudvalidation.controller.dto.PersonOutputDto;
-import com.block7crudvalidation.domain.Persona;
+import com.block7crudvalidation.controller.dto.inputs.PersonInputDto;
+import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
 
 public interface PersonService {
     PersonOutputDto addPerson(PersonInputDto person);

@@ -1,7 +1,7 @@
 package com.block7crudvalidation.domain;
 
-import com.block7crudvalidation.controller.dto.PersonInputDto;
-import com.block7crudvalidation.controller.dto.PersonOutputDto;
+import com.block7crudvalidation.controller.dto.inputs.PersonInputDto;
+import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +19,7 @@ import java.util.Date;
 public class Persona {
     @jakarta.persistence.Id
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id_persona;
     private String usuario;
     private String password;

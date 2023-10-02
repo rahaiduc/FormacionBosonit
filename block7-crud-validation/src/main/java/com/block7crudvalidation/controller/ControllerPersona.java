@@ -1,11 +1,10 @@
 package com.block7crudvalidation.controller;
 
-import com.block7crudvalidation.application.PersonServiceImpl;
-import com.block7crudvalidation.controller.dto.PersonInputDto;
-import com.block7crudvalidation.controller.dto.PersonOutputDto;
+import com.block7crudvalidation.application.impl.PersonServiceImpl;
+import com.block7crudvalidation.controller.dto.inputs.PersonInputDto;
+import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
 import com.block7crudvalidation.domain.CustomError;
 import com.block7crudvalidation.domain.Persona;
-import com.block7crudvalidation.repository.PersonRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("persona")
-public class Controller1 {
+public class ControllerPersona {
 
     @Autowired
     PersonServiceImpl personService;

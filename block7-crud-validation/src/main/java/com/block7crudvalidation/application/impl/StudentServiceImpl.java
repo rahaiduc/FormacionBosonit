@@ -7,6 +7,7 @@ import com.block7crudvalidation.controller.dto.outputs.StudentSimpleOutputDto;
 import com.block7crudvalidation.domain.Mappers.StudentMapper;
 import com.block7crudvalidation.domain.Persona;
 import com.block7crudvalidation.domain.Student;
+import com.block7crudvalidation.repository.AsignaturaRepository;
 import com.block7crudvalidation.repository.PersonRepository;
 import com.block7crudvalidation.repository.ProfesorRepository;
 import com.block7crudvalidation.repository.StudentRepository;
@@ -30,6 +31,9 @@ public class StudentServiceImpl implements StudentService {
     private PersonRepository personRepository;
     @Autowired
     private ProfesorRepository profesorRepository;
+    @Autowired
+    private AsignaturaRepository asignaturaRepository;
+
     @Override
     public StudentOutputDto addStudent(StudentInputDto Student) {
         //Validación de nulos
@@ -39,7 +43,7 @@ public class StudentServiceImpl implements StudentService {
             throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,"Algun/os valores no pueden ser nulos");
         }
 
-        Persona persona=personRepository.findById(Integer.valueOf(Student.getId_persona())).orElseThrow();
+        Persona persona=personRepository.findById(Student.getId_persona()).orElseThrow();
         if (persona.getProfesor() != null && persona.getProfesor().getId_profesor() != null)throw new NoSuchElementException("Esta persona ya tiene un profesor asignado");
         if (persona.getStudent() != null && persona.getStudent().getId_student() != null)throw new NoSuchElementException("Esta persona ya tiene un profesor asignado");
 
@@ -53,18 +57,18 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentOutputDto getFullStudentById(String id) {
-        return studentRepository.findById(Integer.valueOf(id)).orElseThrow().studentToStudentOutputDto();
+        return studentRepository.findById(id).orElseThrow().studentToStudentOutputDto();
     }
 
     @Override
     public StudentSimpleOutputDto getSimpleStudentById(String id) {
-        return studentRepository.findById(Integer.valueOf(id)).orElseThrow().studentToStudentSimpleOutputDto();
+        return studentRepository.findById(id).orElseThrow().studentToStudentSimpleOutputDto();
     }
 
     @Override
     public void deleteStudentById(String id) {
-        studentRepository.findById(Integer.valueOf(id)).orElseThrow();
-        studentRepository.deleteById(Integer.valueOf(id));
+        studentRepository.findById(id).orElseThrow();
+        studentRepository.deleteById(id);
     }
 
     @Override
@@ -77,9 +81,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentOutputDto updateStudent(StudentInputDto Student) {
-        studentRepository.findById(Integer.valueOf(Student.getId_persona())).orElseThrow();
-        StudentMapper mapper=StudentMapper.INSTANCE;
-        Student updateStudent=mapper.studentInputDtoToStudent(Student);
-        return studentRepository.save(updateStudent).studentToStudentOutputDto();
+        Student s=studentRepository.findById(Student.getId_persona()).orElseThrow();
+        StudentMapper.INSTANCE.updateStudentFromDto(Student,s);
+        return studentRepository.save(s).studentToStudentOutputDto();
     }
 }

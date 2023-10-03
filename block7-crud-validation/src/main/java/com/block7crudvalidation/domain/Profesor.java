@@ -1,5 +1,6 @@
 package com.block7crudvalidation.domain;
 
+import com.block7crudvalidation.controller.dto.outputs.ProfesorOutputDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class Profesor {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "custom-string-id-generator")
+    @GenericGenerator(name = "custom-string-id-generator", strategy = "com.block7crudvalidation.domain.GeneradoresId.GeneradorIdPersona")
     private String id_profesor;
 
     @OneToOne
@@ -30,4 +32,13 @@ public class Profesor {
 
     @OneToMany
     private List<Student> Students;
+
+    public ProfesorOutputDto ProfesorToProfesorOutputDto(){
+        return new ProfesorOutputDto(
+                this.id_profesor,
+                this.persona.getId_persona(),
+                this.coments,
+                this.branch
+        );
+    }
 }

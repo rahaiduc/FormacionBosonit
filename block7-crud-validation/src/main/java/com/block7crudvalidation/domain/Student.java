@@ -18,7 +18,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "custom-string-id-generator")
+    @GenericGenerator(name = "custom-string-id-generator", strategy = "com.block7crudvalidation.domain.GeneradoresId.GeneradorIdPersona")
     private String id_student;
 
     @OneToOne

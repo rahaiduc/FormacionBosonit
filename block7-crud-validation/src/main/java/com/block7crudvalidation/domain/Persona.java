@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
@@ -15,9 +16,11 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Persona {
+    @jakarta.persistence.Id
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_persona")
+    @GeneratedValue(generator = "custom-string-id-generator")
+    @GenericGenerator(name = "custom-string-id-generator", strategy = "com.block7crudvalidation.domain.GeneradoresId.GeneradorIdPersona")
     private String id_persona;
     private String usuario;
     private String password;
@@ -36,8 +39,6 @@ public class Persona {
     private Student student;
     @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true)
     private Profesor profesor;
-    @jakarta.persistence.Id
-    private String id;
 
 
 
@@ -68,8 +69,10 @@ public class Persona {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id_persona = id;
     }
+
+
 
 }
 

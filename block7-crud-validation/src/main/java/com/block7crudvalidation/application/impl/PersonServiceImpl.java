@@ -3,6 +3,7 @@ package com.block7crudvalidation.application.impl;
 import com.block7crudvalidation.application.interfaces.PersonService;
 import com.block7crudvalidation.controller.dto.inputs.PersonInputDto;
 import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
+import com.block7crudvalidation.domain.Mappers.PersonMapper;
 import com.block7crudvalidation.domain.Persona;
 import com.block7crudvalidation.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class PersonServiceImpl implements PersonService {
     }
     @Override
     public PersonOutputDto getPersonById(String id){
-        return personRepository.findById(Integer.valueOf(id)).orElseThrow()
+        return personRepository.findById(id).orElseThrow()
                 .personToPersonOutputDto();
     }
 
@@ -52,8 +53,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void deletePersonById(String id) {
-        personRepository.findById(Integer.valueOf(id)).orElseThrow();
-        personRepository.deleteById(Integer.valueOf(id));
+        personRepository.findById(id).orElseThrow();
+        personRepository.deleteById(id);
     }
     @Override
     public List<PersonOutputDto> getAllPersons(int pageNumber, int pageSize) {
@@ -67,8 +68,9 @@ public class PersonServiceImpl implements PersonService {
     }
     @Override
     public PersonOutputDto updatePerson(PersonInputDto person) {
-        personRepository.findById(Integer.valueOf(person.getId_persona())).orElseThrow();
-        return personRepository.save(new Persona(person))
+        Persona p=personRepository.findById(person.getId_persona()).orElseThrow();
+        PersonMapper.INSTANCE.updatePersonFromDto(person,p);
+        return personRepository.save(p)
                 .personToPersonOutputDto();
     }
 }

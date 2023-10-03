@@ -1,5 +1,6 @@
 package com.block7crudvalidation.domain;
 
+import com.block7crudvalidation.controller.dto.outputs.AsignaturaOutputDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +17,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class Asignatura {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "custom-string-id-generator")
+    @GenericGenerator(name = "custom-string-id-generator", strategy = "com.block7crudvalidation.domain.GeneradoresId.GeneradorIdPersona")
     private String id_Asignatura;
 
     private String asignatura;
@@ -35,4 +37,14 @@ public class Asignatura {
     private Date initial_date;
 
     private Date finish_date;
+
+    public AsignaturaOutputDto AsignaturaToAsignaturaOutputDto(){
+        return new AsignaturaOutputDto(
+            this.id_Asignatura,
+            this.asignatura,
+            this.coments,
+            this.initial_date,
+            this.finish_date
+        );
+    }
 }

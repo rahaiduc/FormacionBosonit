@@ -105,7 +105,7 @@ public class ControllerStudent {
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNoSuchElementException() {
-        NoSuchElementException ne=new NoSuchElementException("404-Persona no encontrada");
+        NoSuchElementException ne=new NoSuchElementException("404-Estudiante no encontrado");
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ne.getMessage());
@@ -117,7 +117,7 @@ public class ControllerStudent {
         CustomError ce = new CustomError();
         ce.setTimestamp(new Date());
         ce.setHttpCode(HttpStatus.NOT_FOUND.value());
-        ce.setMensaje("Error 404 - Persona no encontrada");
+        ce.setMensaje("Error 404 - Estudiante no encontrado");
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ce);

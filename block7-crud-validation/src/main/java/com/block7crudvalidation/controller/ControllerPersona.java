@@ -38,9 +38,9 @@ public class ControllerPersona {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PersonOutputDto> getPersonById(@PathVariable String id) {
+    public ResponseEntity<Object> getPersonById(@PathVariable String id) {
         try {
-            return ResponseEntity.ok().body(personService.getPersonById(id));
+            return ResponseEntity.ok().body(personService.searchPersonById(id));
         } catch (Exception e) {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
         }

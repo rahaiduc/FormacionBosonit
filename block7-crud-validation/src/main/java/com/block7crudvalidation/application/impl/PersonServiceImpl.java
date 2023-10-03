@@ -47,6 +47,18 @@ public class PersonServiceImpl implements PersonService {
                 .personToPersonOutputDto();
     }
 
+    public Object searchPersonById(String id){
+        Persona p=personRepository.findById(id).orElseThrow();
+        if(p.getStudent()!=null){
+            return PersonMapper.INSTANCE.personaToEstudianteDto(p);
+        }else if(p.getProfesor()!=null){
+            return PersonMapper.INSTANCE.personaToProfesor(p);
+        }else{
+            return p.personToPersonOutputDto();
+        }
+    }
+
+
     public List<Persona> getPersonByName(String nombre){
         return personRepository.findByName(nombre).stream().toList();
     }

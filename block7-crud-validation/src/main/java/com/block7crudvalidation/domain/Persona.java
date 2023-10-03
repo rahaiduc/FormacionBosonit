@@ -12,6 +12,7 @@ import org.springframework.data.annotation.Id;
 import java.util.Date;
 
 @Entity
+@Table(name="Persona")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

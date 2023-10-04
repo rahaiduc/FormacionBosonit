@@ -15,5 +15,7 @@ public class PersonOutputDto {
     private String name;
     private String surname;
     private String company_email;
+    /*private ProfesorOutputDto profesorOutputDto;
+    private StudentOutputDto studentOutputDto;*/
     private boolean active;
 }

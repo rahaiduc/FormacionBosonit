@@ -11,7 +11,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ProfesorMapper {
     ProfesorMapper INSTANCE= Mappers.getMapper(ProfesorMapper.class);
     Profesor profesorInputDtoToProfesor(ProfesorInputDto profesorInputDto);

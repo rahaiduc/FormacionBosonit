@@ -45,7 +45,7 @@ public class ProfesorServiceImpl implements ProfesorService {
 
         Profesor newProfesor=ProfesorMapper.INSTANCE.profesorInputDtoToProfesor(profesorInputDto);
         newProfesor.setPersona(persona);
-        persona.setProfesor(newProfesor);
+       // persona.setProfesor(newProfesor);
         return profesorRepository.save(newProfesor).ProfesorToProfesorOutputDto();
     }
 

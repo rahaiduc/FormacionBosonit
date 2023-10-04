@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,12 +34,18 @@ public class ProfesorServiceImpl implements ProfesorService {
     @Autowired
     private AsignaturaRepository asignaturaRepository;
     @Override
-    public ProfesorOutputDto addProfesor(ProfesorInputDto Profesor) {
-        if( Profesor.getBranch()==null || Profesor.getBranch().isBlank()){
+    public ProfesorOutputDto addProfesor(ProfesorInputDto profesorInputDto) {
+        if( profesorInputDto.getBranch()==null || profesorInputDto.getBranch().isBlank()){
             //Lanzo la excepcion para que la recoja el controlador y la maneje con un metodo handler
             throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,"Algun/os valores no pueden ser nulos");
         }
-        Profesor newProfesor=ProfesorMapper.INSTANCE.profesorInputDtoToProfesor(Profesor);
+        Persona persona=personRepository.findById(profesorInputDto.getId_persona()).orElseThrow();
+        if (persona.getProfesor() != null && persona.getProfesor().getId_profesor() != null)throw new NoSuchElementException("Esta persona ya tiene un profesor asignado");
+        if (persona.getStudent() != null && persona.getStudent().getId_student() != null)throw new NoSuchElementException("Esta persona ya tiene un estudiante asignado");
+
+        Profesor newProfesor=ProfesorMapper.INSTANCE.profesorInputDtoToProfesor(profesorInputDto);
+        newProfesor.setPersona(persona);
+        persona.setProfesor(newProfesor);
         return profesorRepository.save(newProfesor).ProfesorToProfesorOutputDto();
     }
 

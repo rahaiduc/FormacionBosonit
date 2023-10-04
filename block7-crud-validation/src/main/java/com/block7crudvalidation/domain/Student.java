@@ -46,7 +46,7 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "asignatura_id")
     )
-    private List<Asignatura> asignaturas;
+    private Set<Asignatura> asignaturas;
 
 
     public StudentOutputDto studentToStudentOutputDto(){

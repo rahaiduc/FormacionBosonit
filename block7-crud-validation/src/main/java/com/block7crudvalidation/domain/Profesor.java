@@ -32,7 +32,7 @@ public class Profesor {
     private branchType branch;
 
     @OneToMany
-    private List<Student> Students;
+    private Set<Student> Students;
 
     public ProfesorOutputDto ProfesorToProfesorOutputDto(){
         return new ProfesorOutputDto(

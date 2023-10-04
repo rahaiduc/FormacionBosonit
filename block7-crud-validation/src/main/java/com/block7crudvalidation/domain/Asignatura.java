@@ -30,7 +30,7 @@ public class Asignatura {
             joinColumns = @JoinColumn(name = "asignatura_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-    private List<Student> students;
+    private Set<Student> students;
 
     private String coments;
 

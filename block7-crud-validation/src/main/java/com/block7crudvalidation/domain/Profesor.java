@@ -32,7 +32,7 @@ public class Profesor {
     private branchType branch;
 
     @OneToMany(mappedBy = "profesor", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private Set<Student> Students;
+    private Set<Student> students;
 
     public ProfesorOutputDto ProfesorToProfesorOutputDto(){
         return new ProfesorOutputDto(
@@ -40,6 +40,7 @@ public class Profesor {
                 this.persona.getId_persona(),
                 this.comments,
                 this.branch
+                //this.students
         );
     }
 }

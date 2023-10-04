@@ -2,6 +2,8 @@ package com.block7crudvalidation.domain;
 
 import com.block7crudvalidation.controller.dto.inputs.PersonInputDto;
 import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
+import com.block7crudvalidation.controller.dto.outputs.PersonaEstudianteOutputDto;
+import com.block7crudvalidation.controller.dto.outputs.PersonaProfesorOutputDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -68,6 +70,31 @@ public class Persona {
                 this.active
         );
     }
+
+    public PersonaProfesorOutputDto personToPersonProfesorOutputDto() {
+        return new PersonaProfesorOutputDto(
+                this.id_persona,
+                this.usuario,
+                this.name,
+                this.surname,
+                this.company_email,
+                this.active,
+                this.profesor.ProfesorToProfesorOutputDto()
+        );
+    }
+
+    public PersonaEstudianteOutputDto personToPersonaEstudianteOutputDto() {
+        return new PersonaEstudianteOutputDto(
+                this.id_persona,
+                this.usuario,
+                this.name,
+                this.surname,
+                this.company_email,
+                this.active,
+                this.student.studentToStudentFulltOutputDto()
+        );
+    }
+
 
     public void setId(String id) {
         this.id_persona = id;

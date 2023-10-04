@@ -5,7 +5,7 @@ import com.block7crudvalidation.application.impl.StudentServiceImpl;
 import com.block7crudvalidation.controller.dto.inputs.PersonInputDto;
 import com.block7crudvalidation.controller.dto.inputs.StudentInputDto;
 import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
-import com.block7crudvalidation.controller.dto.outputs.StudentOutputDto;
+import com.block7crudvalidation.controller.dto.outputs.StudentSimpleOutputDto;
 import com.block7crudvalidation.domain.CustomError;
 import com.block7crudvalidation.domain.Persona;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,7 +29,7 @@ public class ControllerStudent {
     StudentServiceImpl studentService;
 
     @PostMapping
-    public ResponseEntity<StudentOutputDto> addStudent(@Valid @RequestBody StudentInputDto student) {
+    public ResponseEntity<StudentSimpleOutputDto> addStudent(@Valid @RequestBody StudentInputDto student) {
         try {
             URI location = URI.create("/estudiante");
             return ResponseEntity.created(location).body(studentService.addStudent(student));
@@ -63,7 +63,7 @@ public class ControllerStudent {
     }*/
 
     @GetMapping
-    public List<StudentOutputDto> getAllStudents() {
+    public List<StudentSimpleOutputDto> getAllStudents() {
         try{
             return studentService.getAllStudents();
         }catch (Exception e){
@@ -81,7 +81,7 @@ public class ControllerStudent {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentOutputDto> updateStudent(@PathVariable String id,@RequestBody StudentInputDto student) {
+    public ResponseEntity<StudentSimpleOutputDto> updateStudent(@PathVariable String id,@RequestBody StudentInputDto student) {
         try {
             student.setId_student(id);
             return ResponseEntity.ok().body(studentService.updateStudent(student));
@@ -104,11 +104,11 @@ public class ControllerStudent {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<String> handleNoSuchElementException() {
+    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException nsee) {
         NoSuchElementException ne=new NoSuchElementException("404-Estudiante no encontrado");
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(ne.getMessage());
+                .body(nsee.getMessage());
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

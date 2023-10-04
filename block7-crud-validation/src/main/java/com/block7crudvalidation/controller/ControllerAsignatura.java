@@ -5,7 +5,6 @@ import com.block7crudvalidation.application.impl.StudentServiceImpl;
 import com.block7crudvalidation.controller.dto.inputs.AsignaturaInputDto;
 import com.block7crudvalidation.controller.dto.inputs.StudentInputDto;
 import com.block7crudvalidation.controller.dto.outputs.AsignaturaOutputDto;
-import com.block7crudvalidation.controller.dto.outputs.StudentOutputDto;
 import com.block7crudvalidation.domain.CustomError;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;

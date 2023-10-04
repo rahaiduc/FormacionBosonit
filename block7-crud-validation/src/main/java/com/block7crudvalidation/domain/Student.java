@@ -1,7 +1,7 @@
 package com.block7crudvalidation.domain;
 
 import com.block7crudvalidation.controller.dto.inputs.StudentInputDto;
-import com.block7crudvalidation.controller.dto.outputs.StudentOutputDto;
+import com.block7crudvalidation.controller.dto.outputs.StudentFullOutputDto;
 import com.block7crudvalidation.controller.dto.outputs.StudentSimpleOutputDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,7 +30,7 @@ public class Student {
     @Column(nullable = false)
     private int num_hours_week;
 
-    private String coments;
+    private String comments;
 
     @ManyToOne
     @JoinColumn(name="id_profesor",nullable = false, unique = true)
@@ -49,24 +49,15 @@ public class Student {
     private Set<Asignatura> asignaturas;
 
 
-    public StudentOutputDto studentToStudentOutputDto(){
-        return new StudentOutputDto(
+    public StudentFullOutputDto studentToStudentFulltOutputDto(){
+        return new StudentFullOutputDto(
                 this.id_student,
                 this.num_hours_week,
-                this.coments,
+                this.comments,
                 this.branch,
-                this.persona.getId_persona(),
-                this.persona.getUsuario(),
-                this.persona.getPassword(),
-                this.persona.getName(),
-                this.persona.getSurname(),
-                this.persona.getCompany_email(),
-                this.persona.getPersonal_email(),
-                this.persona.getCity(),
-                this.persona.isActive(),
-                this.persona.getCreated_date(),
-                this.persona.getImagen_url(),
-                this.persona.getTermination_date()
+                this.persona.personToPersonOutputDto(),
+                this.profesor.ProfesorToProfesorOutputDto(),
+                this.asignaturas
         );
     }
 
@@ -75,8 +66,7 @@ public class Student {
         return new StudentSimpleOutputDto(
                 this.id_student,
                 this.num_hours_week,
-                this.coments,
-                this.profesor,
+                this.comments,
                 this.branch
         );
     }

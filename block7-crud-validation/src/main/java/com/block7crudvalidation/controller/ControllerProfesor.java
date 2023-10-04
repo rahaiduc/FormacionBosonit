@@ -5,7 +5,6 @@ import com.block7crudvalidation.application.impl.StudentServiceImpl;
 import com.block7crudvalidation.controller.dto.inputs.ProfesorInputDto;
 import com.block7crudvalidation.controller.dto.inputs.StudentInputDto;
 import com.block7crudvalidation.controller.dto.outputs.ProfesorOutputDto;
-import com.block7crudvalidation.controller.dto.outputs.StudentOutputDto;
 import com.block7crudvalidation.domain.CustomError;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -98,11 +97,11 @@ public class ControllerProfesor {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<String> handleNoSuchElementException() {
+    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException nsee) {
         NoSuchElementException ne=new NoSuchElementException("404-Profesor no encontrada");
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(ne.getMessage());
+                .body(nsee.getMessage());
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

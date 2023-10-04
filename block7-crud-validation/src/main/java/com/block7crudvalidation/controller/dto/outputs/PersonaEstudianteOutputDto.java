@@ -8,14 +8,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonaEstudianteOutputDto {
-    private String id_student;
-    private int num_hours_week;
-    private String comments;
-    private Profesor profesor;
-    private branchType branch;
-    private List<Asignatura> asignaturas;
+    private String id_persona;
+    private String usuario;
+    private String name;
+    private String surname;
+    private String company_email;
+    private boolean active;
+    private StudentFullOutputDto studentFullOutputDto;
 }

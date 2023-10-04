@@ -9,7 +9,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 import com.block7crudvalidation.domain.Student;
-@Mapper
+@Mapper(componentModel = "spring")
 public interface StudentMapper {
     StudentMapper INSTANCE= Mappers.getMapper(StudentMapper.class);
 

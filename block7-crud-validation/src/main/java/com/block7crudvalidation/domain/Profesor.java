@@ -25,7 +25,7 @@ public class Profesor {
     @JoinColumn(name = "id_persona",nullable = false,unique = true)
     private Persona persona;
 
-    private String coments;
+    private String comments;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(10) DEFAULT 'FRONT'", nullable = false)
@@ -38,7 +38,7 @@ public class Profesor {
         return new ProfesorOutputDto(
                 this.id_profesor,
                 this.persona.getId_persona(),
-                this.coments,
+                this.comments,
                 this.branch
         );
     }

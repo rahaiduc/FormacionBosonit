@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 public class ProfesorInputDto {
     private String id_profesor;
     private String id_persona;
-    private String coments;
+    private String comments;
     private String branch;
 }

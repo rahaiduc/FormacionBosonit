@@ -19,6 +19,5 @@ public class StudentFullOutputDto {
     branchType branch;
     PersonOutputDto personOutputDto;
     ProfesorOutputDto profesorOutputDto;
-    Set<Asignatura> asignaturas;
-
+    Set<AsignaturaOutputDto> asignaturas;
 }

@@ -32,7 +32,7 @@ public class Asignatura {
     )
     private Set<Student> students;
 
-    private String coments;
+    private String comments;
 
     @Column(nullable = false)
     private Date initial_date;
@@ -43,7 +43,7 @@ public class Asignatura {
         return new AsignaturaOutputDto(
             this.id_Asignatura,
             this.asignatura,
-            this.coments,
+            this.comments,
             this.initial_date,
             this.finish_date
         );

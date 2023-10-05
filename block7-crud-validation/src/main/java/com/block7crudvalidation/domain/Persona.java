@@ -5,9 +5,7 @@ import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
 import com.block7crudvalidation.controller.dto.outputs.PersonaEstudianteOutputDto;
 import com.block7crudvalidation.controller.dto.outputs.PersonaProfesorOutputDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.Id;
 
@@ -15,7 +13,8 @@ import java.util.Date;
 
 @Entity
 @Table(name="Persona")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Persona {

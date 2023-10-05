@@ -9,7 +9,7 @@ import java.util.Date;
 public class AsignaturaOutputDto {
     private String id_asignatura;
     private String asignatura;
-    private String coment;
+    private String comments;
     private Date initial_date;
     private Date finish_date;
 }

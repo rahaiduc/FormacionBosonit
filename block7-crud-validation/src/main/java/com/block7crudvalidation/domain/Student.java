@@ -4,17 +4,17 @@ import com.block7crudvalidation.controller.dto.inputs.StudentInputDto;
 import com.block7crudvalidation.controller.dto.outputs.StudentFullOutputDto;
 import com.block7crudvalidation.controller.dto.outputs.StudentSimpleOutputDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="Estudiante")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
@@ -57,7 +57,7 @@ public class Student {
                 this.branch,
                 this.persona.personToPersonOutputDto(),
                 this.profesor.ProfesorToProfesorOutputDto(),
-                this.asignaturas
+                this.asignaturas.stream().map(Asignatura::AsignaturaToAsignaturaOutputDto).collect(Collectors.toSet())
         );
     }
 

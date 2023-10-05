@@ -2,8 +2,10 @@ package com.block7crudvalidation.application.impl;
 
 import com.block7crudvalidation.application.interfaces.StudentService;
 import com.block7crudvalidation.controller.dto.inputs.StudentInputDto;
+import com.block7crudvalidation.controller.dto.outputs.AsignaturaOutputDto;
 import com.block7crudvalidation.controller.dto.outputs.StudentFullOutputDto;
 import com.block7crudvalidation.controller.dto.outputs.StudentSimpleOutputDto;
+import com.block7crudvalidation.domain.Asignatura;
 import com.block7crudvalidation.domain.Mappers.StudentMapper;
 import com.block7crudvalidation.domain.Persona;
 import com.block7crudvalidation.domain.Profesor;
@@ -21,6 +23,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,5 +90,20 @@ public class StudentServiceImpl implements StudentService {
         Student s=studentRepository.findById(Student.getId_persona()).orElseThrow();
         StudentMapper.INSTANCE.updateStudentFromDto(Student,s);
         return studentRepository.save(s).studentToStudentSimpleOutputDto();
+    }
+
+    public List<AsignaturaOutputDto> getAsignaturasStudent(String id){
+        Student s=studentRepository.findById(id).orElseThrow();
+        return s.getAsignaturas().stream().map(Asignatura::AsignaturaToAsignaturaOutputDto).collect(Collectors.toList());
+    }
+
+    public StudentFullOutputDto addAsignaturasEstudiante(List<String> idAsignaturas, String idStudent){
+        Student s=studentRepository.findById(idStudent).orElseThrow();
+        Set<Asignatura> lista=s.getAsignaturas();
+        for(String idAsignatura: idAsignaturas){
+            lista.add(asignaturaRepository.findById(idAsignatura).orElseThrow());
+        }
+        s.setAsignaturas(lista);
+        return studentRepository.save(s).studentToStudentFulltOutputDto();
     }
 }

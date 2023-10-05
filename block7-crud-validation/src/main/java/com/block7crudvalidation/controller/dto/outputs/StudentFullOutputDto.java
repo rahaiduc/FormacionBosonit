@@ -21,5 +21,4 @@ public class StudentFullOutputDto {
     ProfesorOutputDto profesorOutputDto;
     Set<Asignatura> asignaturas;
 
-
 }

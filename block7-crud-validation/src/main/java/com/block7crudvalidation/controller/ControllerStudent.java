@@ -5,6 +5,7 @@ import com.block7crudvalidation.application.impl.StudentServiceImpl;
 import com.block7crudvalidation.controller.dto.inputs.PersonInputDto;
 import com.block7crudvalidation.controller.dto.inputs.StudentInputDto;
 import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
+import com.block7crudvalidation.controller.dto.outputs.StudentFullOutputDto;
 import com.block7crudvalidation.controller.dto.outputs.StudentSimpleOutputDto;
 import com.block7crudvalidation.domain.CustomError;
 import com.block7crudvalidation.domain.Persona;
@@ -90,6 +91,11 @@ public class ControllerStudent {
         }
     }
 
+    @PutMapping("/addAsignaturas/{id}")
+    public StudentFullOutputDto addAsignaturas(@PathVariable String id,@RequestBody List<String> idAsignaturas){
+        return studentService.addAsignaturasEstudiante(idAsignaturas,id);
+    }
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -134,4 +140,5 @@ public class ControllerStudent {
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(ce);
     }
+
 }

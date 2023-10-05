@@ -12,7 +12,7 @@ import java.util.Date;
 public class AsignaturaInputDto {
     private String id_asignatura;
     private String asignatura;
-    private String coment;
+    private String coments;
     private Date initial_date;
     private Date finish_date;
 }

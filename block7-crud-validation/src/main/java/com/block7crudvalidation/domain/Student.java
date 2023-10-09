@@ -3,10 +3,12 @@ package com.block7crudvalidation.domain;
 import com.block7crudvalidation.controller.dto.inputs.StudentInputDto;
 import com.block7crudvalidation.controller.dto.outputs.StudentFullOutputDto;
 import com.block7crudvalidation.controller.dto.outputs.StudentSimpleOutputDto;
+import com.block7crudvalidation.controller.dto.outputs.StudentsAsignaturas;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,7 +35,7 @@ public class Student {
     private String comments;
 
     @ManyToOne
-    @JoinColumn(name="id_profesor",nullable = false, unique = true)
+    @JoinColumn(name = "profesor_id_profesor")
     private Profesor profesor;
 
     @Enumerated(EnumType.STRING)
@@ -46,7 +48,7 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "asignatura_id")
     )
-    private Set<Asignatura> asignaturas;
+    private Set<Asignatura> asignaturas=new HashSet<>();;
 
 
     public StudentFullOutputDto studentToStudentFulltOutputDto(){
@@ -68,6 +70,14 @@ public class Student {
                 this.num_hours_week,
                 this.comments,
                 this.branch
+        );
+    }
+
+    public StudentsAsignaturas studentToStudentAsignaturas(){
+        String profesor_id = this.profesor != null ? this.profesor.getId_profesor() : null;
+        return new StudentsAsignaturas(
+                this.id_student,
+                this.asignaturas.stream().map(Asignatura::AsignaturaToAsignaturaOutputDto).collect(Collectors.toSet())
         );
     }
 }

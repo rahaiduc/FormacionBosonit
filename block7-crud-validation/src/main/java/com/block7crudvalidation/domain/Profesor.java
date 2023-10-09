@@ -1,18 +1,22 @@
 package com.block7crudvalidation.domain;
 
 import com.block7crudvalidation.controller.dto.outputs.ProfesorOutputDto;
+import com.block7crudvalidation.controller.dto.outputs.StudentSimpleOutputDto;
+import com.block7crudvalidation.controller.dto.outputs.StudentsAsignaturas;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="Profesor")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Profesor {
@@ -32,15 +36,15 @@ public class Profesor {
     private branchType branch;
 
     @OneToMany(mappedBy = "profesor", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private Set<Student> students;
+    private Set<Student> students=new HashSet<>();
 
     public ProfesorOutputDto ProfesorToProfesorOutputDto(){
         return new ProfesorOutputDto(
                 this.id_profesor,
                 this.persona.getId_persona(),
                 this.comments,
-                this.branch
-                //this.students
+                this.branch,
+                /*this.students==null? new HashSet<StudentsAsignaturas>() :*/this.students.stream().map(Student::studentToStudentAsignaturas).collect(Collectors.toSet())
         );
     }
 }

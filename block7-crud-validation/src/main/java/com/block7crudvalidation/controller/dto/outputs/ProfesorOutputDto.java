@@ -16,5 +16,5 @@ public class ProfesorOutputDto {
     private String id_persona;
     private String comments;
     private branchType branch;
-    //private Set<Student> students;
+    private Set<StudentsAsignaturas> students;
 }

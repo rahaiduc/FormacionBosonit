@@ -2,18 +2,18 @@ package com.block7crudvalidation.domain;
 
 import com.block7crudvalidation.controller.dto.outputs.AsignaturaOutputDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name="Asignatura")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Asignatura {
@@ -30,7 +30,7 @@ public class Asignatura {
             joinColumns = @JoinColumn(name = "asignatura_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-    private Set<Student> students;
+    private Set<Student> students=new HashSet<>();;
 
     private String comments;
 

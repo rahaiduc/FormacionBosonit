@@ -1,8 +1,10 @@
 package com.block7crudvalidation.controller;
 
 import com.block7crudvalidation.application.impl.PersonServiceImpl;
+import com.block7crudvalidation.application.interfaces.UserClient;
 import com.block7crudvalidation.controller.dto.inputs.PersonInputDto;
 import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
+import com.block7crudvalidation.controller.dto.outputs.ProfesorOutputDto;
 import com.block7crudvalidation.domain.CustomError;
 import com.block7crudvalidation.domain.Persona;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,6 +26,9 @@ public class ControllerPersona {
 
     @Autowired
     PersonServiceImpl personService;
+
+    @Autowired
+    UserClient userClient;
 
     @PostMapping
     public ResponseEntity<PersonOutputDto> addPerson(@Valid @RequestBody PersonInputDto person) {
@@ -53,6 +58,11 @@ public class ControllerPersona {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @GetMapping("/profesor/{id}")
+    public ProfesorOutputDto getProfesorOutputById(@PathVariable int id){
+        return userClient.getProfesor(id);
     }
 
     @GetMapping

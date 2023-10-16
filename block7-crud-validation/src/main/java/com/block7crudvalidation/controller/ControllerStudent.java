@@ -96,6 +96,12 @@ public class ControllerStudent {
         return studentService.addAsignaturasEstudiante(idAsignaturas,id);
     }
 
+    @PutMapping("/removeAsignaturas/{id}")
+    public StudentFullOutputDto removeAsignaturas(@PathVariable String id,@RequestBody List<String> idAsignaturas){
+        return studentService.removeAsignaturasEstudiante(idAsignaturas,id);
+    }
+
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -14,6 +14,7 @@ import com.block7crudvalidation.repository.AsignaturaRepository;
 import com.block7crudvalidation.repository.PersonRepository;
 import com.block7crudvalidation.repository.ProfesorRepository;
 import com.block7crudvalidation.repository.StudentRepository;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -102,6 +103,16 @@ public class StudentServiceImpl implements StudentService {
         Set<Asignatura> lista=s.getAsignaturas();
         for(String idAsignatura: idAsignaturas){
             lista.add(asignaturaRepository.findById(idAsignatura).orElseThrow());
+        }
+        s.setAsignaturas(lista);
+        return studentRepository.save(s).studentToStudentFulltOutputDto();
+    }
+
+    public StudentFullOutputDto removeAsignaturasEstudiante(List<String> idAsignaturas, String id) {
+        Student s=studentRepository.findById(id).orElseThrow();
+        Set<Asignatura> lista=s.getAsignaturas();
+        for(String idAsignatura: idAsignaturas){
+            lista.remove(asignaturaRepository.findById(idAsignatura).orElseThrow(()-> new NoSuchElementException("El Id de asignatura no existe")));
         }
         s.setAsignaturas(lista);
         return studentRepository.save(s).studentToStudentFulltOutputDto();

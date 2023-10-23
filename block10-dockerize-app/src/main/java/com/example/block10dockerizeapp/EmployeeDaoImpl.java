@@ -32,7 +32,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public void insertEmployee(Employee emp) {
-        final String sql = "insert into employee(employeeId, employeeName , employeeAddress,employeeEmail) values(:employeeId,:employeeName,:employeeEmail,:employeeAddress)";
+        final String sql = "insert into employee(employeeId, employeeName ,employeeEmail, employeeAddress) values(:employeeId,:employeeName,:employeeEmail,:employeeAddress)";
 
         KeyHolder holder = new GeneratedKeyHolder();
         SqlParameterSource param = new MapSqlParameterSource()

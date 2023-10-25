@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -75,8 +76,8 @@ public class PersonServiceImpl implements PersonService {
                 .stream()
                 .map(Persona::personToPersonOutputDto).toList();
     }
-    public List<Persona> getAllPersons() {
-        return personRepository.findAll().stream().toList();
+    public List<PersonOutputDto> getAllPersons() {
+        return personRepository.findAll().stream().map(Persona::personToPersonOutputDto).collect(Collectors.toList());
     }
     @Override
     public PersonOutputDto updatePerson(PersonInputDto person) {

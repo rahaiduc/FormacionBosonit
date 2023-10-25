@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.Id;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -35,7 +36,6 @@ public class Persona {
     private Date created_date;
     private String imagen_url;
     private Date termination_date;
-
 
     @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true)
     private Student student;

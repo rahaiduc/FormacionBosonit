@@ -21,7 +21,6 @@ import java.net.URI;
 import java.util.*;
 
 @RestController
-@RequestMapping("persona")
 public class ControllerPersona {
 
     @Autowired
@@ -30,7 +29,7 @@ public class ControllerPersona {
     @Autowired
     UserClient userClient;
 
-    @PostMapping
+    @PostMapping("person")
     public ResponseEntity<PersonOutputDto> addPerson(@Valid @RequestBody PersonInputDto person) {
         try {
             URI location = URI.create("/persona");
@@ -41,8 +40,20 @@ public class ControllerPersona {
             throw e;
         }
     }
+    @CrossOrigin(origins = "https://codepen.io/")
+    @PostMapping("/addperson")
+    public ResponseEntity<PersonOutputDto> añadirPersonaCors(@RequestBody PersonInputDto persona){
+        URI location = URI.create("/persona");
+        return ResponseEntity.created(location).body(personService.addPerson(persona));
+    }
 
-    @GetMapping("/{id}")
+    @CrossOrigin(origins = "https://codepen.io/")
+    @GetMapping("/getall")
+    public ResponseEntity<List<PersonOutputDto>> getAllCors() {
+        return ResponseEntity.ok().body(personService.getAllPersons());
+    }
+
+    @GetMapping("person/{id}")
     public PersonOutputDto getPersonById(@PathVariable String id) {
         try {
             return personService.searchPersonById(id);
@@ -51,7 +62,7 @@ public class ControllerPersona {
         }
     }
 
-    @GetMapping("/nombre/{nombre}")
+    @GetMapping("person/nombre/{nombre}")
     public List<Persona> getPersonByName(@PathVariable String nombre) {
         try {
             return personService.getPersonByName(nombre);
@@ -60,13 +71,13 @@ public class ControllerPersona {
         }
     }
 
-    @GetMapping("/profesor/{id}")
+    @GetMapping("person/profesor/{id}")
     public ProfesorOutputDto getProfesorOutputById(@PathVariable int id){
         return userClient.getProfesor(id);
     }
 
-    @GetMapping
-    public List<Persona> getAllPerson() {
+    @GetMapping("person/getall")
+    public List<PersonOutputDto> getAllPerson() {
         try{
             return personService.getAllPersons();
         }catch (Exception e){
@@ -74,7 +85,7 @@ public class ControllerPersona {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("person/{id}")
     public ResponseEntity<PersonOutputDto> deletePersonById(@PathVariable String id) {
         try {
             PersonOutputDto pod=personService.getPersonById(id);
@@ -85,7 +96,7 @@ public class ControllerPersona {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("person/{id}")
     public ResponseEntity<PersonOutputDto> updatePerson(@PathVariable String id,@RequestBody PersonInputDto person) {
         try {
             person.setId_persona(id);

@@ -71,27 +71,25 @@ public class Persona {
     }
 
     public PersonaProfesorOutputDto personToPersonProfesorOutputDto() {
-        return new PersonaProfesorOutputDto(
-                this.id_persona,
-                this.usuario,
-                this.name,
-                this.surname,
-                this.company_email,
-                this.active,
-                this.profesor.ProfesorToProfesorOutputDto()
-        );
+        PersonaProfesorOutputDto personaProfesorOutputDto=new PersonaProfesorOutputDto(this.profesor.ProfesorToProfesorOutputDto());
+        personaProfesorOutputDto.setId_persona(this.id_persona);
+        personaProfesorOutputDto.setName(this.name);
+        personaProfesorOutputDto.setSurname(this.surname);
+        personaProfesorOutputDto.setCompany_email(this.company_email);
+        personaProfesorOutputDto.setUsuario(this.usuario);
+        personaProfesorOutputDto.setActive(this.active);
+        return  personaProfesorOutputDto;
     }
 
     public PersonaEstudianteOutputDto personToPersonaEstudianteOutputDto() {
-        return new PersonaEstudianteOutputDto(
-                this.id_persona,
-                this.usuario,
-                this.name,
-                this.surname,
-                this.company_email,
-                this.active,
-                this.student.studentToStudentFulltOutputDto()
-        );
+        PersonaEstudianteOutputDto personaEstudianteOutputDto=new PersonaEstudianteOutputDto(this.student.studentToStudentFulltOutputDto());
+        personaEstudianteOutputDto.setId_persona(this.id_persona);
+        personaEstudianteOutputDto.setName(this.name);
+        personaEstudianteOutputDto.setSurname(this.surname);
+        personaEstudianteOutputDto.setCompany_email(this.company_email);
+        personaEstudianteOutputDto.setUsuario(this.usuario);
+        personaEstudianteOutputDto.setActive(this.active);
+        return  personaEstudianteOutputDto;
     }
 
 

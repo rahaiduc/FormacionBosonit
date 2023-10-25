@@ -43,7 +43,7 @@ public class ControllerPersona {
     }
 
     @GetMapping("/{id}")
-    public Object getPersonById(@PathVariable String id) {
+    public PersonOutputDto getPersonById(@PathVariable String id) {
         try {
             return personService.searchPersonById(id);
         } catch (Exception e) {

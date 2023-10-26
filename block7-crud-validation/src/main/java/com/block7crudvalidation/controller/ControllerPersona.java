@@ -40,17 +40,17 @@ public class ControllerPersona {
             throw e;
         }
     }
-    @CrossOrigin(origins = "https://codepen.io/")
+    @CrossOrigin(origins = "https://cdpn.io")
     @PostMapping("/addperson")
-    public ResponseEntity<PersonOutputDto> añadirPersonaCors(@RequestBody PersonInputDto persona){
+    public PersonOutputDto añadirPersonaCors(@RequestBody PersonInputDto persona){
         URI location = URI.create("/persona");
-        return ResponseEntity.created(location).body(personService.addPerson(persona));
+        return personService.addPerson(persona);
     }
 
-    @CrossOrigin(origins = "https://codepen.io/")
+    @CrossOrigin(origins = "https://cdpn.io")
     @GetMapping("/getall")
-    public ResponseEntity<List<PersonOutputDto>> getAllCors() {
-        return ResponseEntity.ok().body(personService.getAllPersons());
+    public List<PersonOutputDto> getAllCors() {
+        return personService.getAllPersons();
     }
 
     @GetMapping("person/{id}")

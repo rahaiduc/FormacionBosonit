@@ -32,12 +32,12 @@ public class PersonServiceImpl implements PersonService {
             person.getCreated_date()==null ||
             person.getPassword()==null || person.getPassword().isBlank() ){
             //Lanzo la excepcion para que la recoja el controlador y la maneje con un metodo handler
-            throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,"Algun/os valores no pueden ser nulos");
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"Algun/os valores no pueden ser nulos");
         }
         //Validacion caracteres en el campo usuario
         if(person.getUsuario().length()>10 || person.getUsuario().length()<6){
             //Lanzo la excepcion para que la recoja el controlador y la maneje con un metodo handler
-            throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,"El usuario tiene que tener entre 6 y 10 caracteres");
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"El usuario tiene que tener entre 6 y 10 caracteres");
         }
         return personRepository.save(new Persona(person))
                 .personToPersonOutputDto();

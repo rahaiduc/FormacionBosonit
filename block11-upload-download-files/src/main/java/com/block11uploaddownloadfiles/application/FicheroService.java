@@ -8,6 +8,6 @@ import java.io.IOException;
 public interface FicheroService {
     FicheroOutputDto subirFichero(String tipo, MultipartFile file) throws IOException;
     String modificarRuta(String ruta);
-    String descargarFicheroId(int id);
-    String descargarFicheroNombre(String nombre);
+    FicheroOutputDto descargarFicheroId(int id);
+    FicheroOutputDto descargarFicheroNombre(String nombre);
 }

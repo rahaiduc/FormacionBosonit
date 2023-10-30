@@ -32,12 +32,12 @@ public class Controlador {
     }
 
     @GetMapping("/{id}")
-    public String devolverFicheroId(@PathVariable int id){
+    public FicheroOutputDto devolverFicheroId(@PathVariable int id){
         return ficheroService.descargarFicheroId(id);
     }
 
     @GetMapping("/nombre/{nombre}")
-    public String devolverFicheroNombre(@PathVariable String nombre){
+    public FicheroOutputDto devolverFicheroNombre(@PathVariable String nombre){
         return ficheroService.descargarFicheroNombre(nombre);
     }
 

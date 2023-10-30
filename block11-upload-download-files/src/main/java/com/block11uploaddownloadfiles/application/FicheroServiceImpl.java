@@ -18,10 +18,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class FicheroServiceImpl implements FicheroService, CommandLineRunner {
     private String ruta;
+    private String directorio="..\\..\\FicherosSubidos";
     @Autowired
     FicheroRepository ficheroRepository;
 
@@ -35,14 +37,11 @@ public class FicheroServiceImpl implements FicheroService, CommandLineRunner {
         if (!nombreFichero.endsWith(tipo)) {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"El fichero debe tener extensión " + tipo);
         }
-        if(this.ruta==null){
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"La ruta esta vacia");
-        }
-        File directorio=new File(this.ruta);
-        if(!directorio.isDirectory()){
+        File path=new File(directorio);
+        if(!path.isDirectory()){
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"La ruta no es un directorio");
         }
-        Path filePath = Paths.get(this.ruta).resolve(nombreFichero);
+        Path filePath = Paths.get(this.directorio).resolve(nombreFichero);
         Files.write(filePath, file.getBytes());
 
         Fichero fichero=new Fichero();
@@ -54,17 +53,50 @@ public class FicheroServiceImpl implements FicheroService, CommandLineRunner {
 
     @Override
     public String modificarRuta(String ruta) {
-        return null;
+        Path path = Paths.get(ruta);
+        if(!Files.exists(path)){
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"La ruta no es un directorio");
+        }
+        this.ruta = ruta;
+        return "El path ha cambiado a ser: " + this.ruta;
     }
 
     @Override
-    public String descargarFicheroId(int id) {
-        return null;
+    public FicheroOutputDto descargarFicheroId(int id) {
+        Optional<Fichero> posiblefichero = ficheroRepository.findById(id);
+        if(!posiblefichero.isPresent()) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"No se ha encontrado el fichero con el id "+id);
+        }
+        return descargarFichero(posiblefichero.get());
     }
 
     @Override
-    public String descargarFicheroNombre(String nombre) {
-        return null;
+    public FicheroOutputDto descargarFicheroNombre(String nombre) {
+        Optional<Fichero> posiblefichero = ficheroRepository.findByNombre(nombre);
+        if(!posiblefichero.isPresent()) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"No se ha encontrado el fichero con el nombre "+nombre);
+        }
+        return descargarFichero(posiblefichero.get());
     }
+    private FicheroOutputDto descargarFichero(Fichero fichero){
+        String rutaFichero = this.directorio + "/" + fichero.getNombre();
+
+        Path path = Paths.get(rutaFichero);
+        if (!Files.exists(path) || Files.isDirectory(path)) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"No se ha encontrado el fichero en la ruta indicada.");
+        }
+        try {
+            byte[] contenido = Files.readAllBytes(path);
+
+            String nombreFichero = fichero.getNombre();
+            Path filePath = Paths.get(this.ruta).resolve(nombreFichero);
+            Files.write(filePath, contenido);
+
+            return fichero.ficheroToFicheroOutputDto();
+        } catch (IOException e) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"Error al leer el contenido del fichero.");
+        }
+    }
+
 
 }

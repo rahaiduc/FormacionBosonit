@@ -9,5 +9,7 @@ import java.util.List;
 public interface PersonRepository extends JpaRepository<Persona, String> {
     @Query("SELECT t FROM Persona t WHERE t.name=?1")
     List<Persona> findByName(String nombre);
+
+
 }
 

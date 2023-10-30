@@ -10,6 +10,7 @@ import com.block7crudvalidation.domain.Persona;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -31,14 +32,8 @@ public class ControllerPersona {
 
     @PostMapping("person")
     public ResponseEntity<PersonOutputDto> addPerson(@Valid @RequestBody PersonInputDto person) {
-        try {
             URI location = URI.create("/persona");
-            return ResponseEntity.created(location).body(personService.addPerson(person));
-        }
-        catch (Exception e){
-            //Tengo un metodo handler que maneja la excepcion
-            throw e;
-        }
+        return ResponseEntity.created(location).body(personService.addPerson(person));
     }
     @CrossOrigin(origins = "https://cdpn.io")
     @PostMapping("/addperson")
@@ -53,22 +48,38 @@ public class ControllerPersona {
         return personService.getAllPersons();
     }
 
+    @GetMapping("/query1")
+    public List<PersonOutputDto> query1(@RequestParam(required = false) String usuario,@RequestParam(required = false) String name,
+                                                        @RequestParam(required = false) String surname,
+                                                        @RequestParam(required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") Date createdDate,
+                                                        @RequestParam(required = false) String dateCondition,
+                                                        @RequestParam(required = false) String orderBy,
+                                                        @RequestParam(required = false) String orderByDirection,
+                                                        @RequestParam Integer pageNumber,
+                                                        @RequestParam(defaultValue = "10", required = false) Integer pageSize){
+        HashMap<String, Object> data = new HashMap<>();
+        if(usuario != null) data.put("usuario",usuario);
+        if(name != null) data.put("name",name);
+        if(surname != null) data.put("surname",surname);
+        if(createdDate != null) data.put("createdDate",createdDate);
+        if(dateCondition != null) data.put("dateCondition",dateCondition);
+        if(orderBy != null) data.put("orderBy",orderBy);
+        if(orderByDirection != null) data.put("orderByDirection",orderByDirection);
+        if(pageNumber != null) data.put("pageNumber",pageNumber);
+        if(pageSize != null) data.put("pageSize",pageSize);
+        return personService.getCustomQuery(data);
+    }
+
+
+
     @GetMapping("person/{id}")
     public PersonOutputDto getPersonById(@PathVariable String id) {
-        try {
-            return personService.searchPersonById(id);
-        } catch (Exception e) {
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
-        }
+        return personService.searchPersonById(id);
     }
 
     @GetMapping("person/nombre/{nombre}")
     public List<Persona> getPersonByName(@PathVariable String nombre) {
-        try {
-            return personService.getPersonByName(nombre);
-        } catch (Exception e) {
-            throw e;
-        }
+        return personService.getPersonByName(nombre);
     }
 
     @GetMapping("person/profesor/{id}")
@@ -78,32 +89,20 @@ public class ControllerPersona {
 
     @GetMapping("person/getall")
     public List<PersonOutputDto> getAllPerson() {
-        try{
-            return personService.getAllPersons();
-        }catch (Exception e){
-            throw e;
-        }
+        return personService.getAllPersons();
     }
 
     @DeleteMapping("person/{id}")
     public ResponseEntity<PersonOutputDto> deletePersonById(@PathVariable String id) {
-        try {
-            PersonOutputDto pod=personService.getPersonById(id);
-            personService.deletePersonById(id);
-            return ResponseEntity.ok().body(pod);
-        } catch (Exception e) {
-            throw e;
-        }
+        PersonOutputDto pod=personService.getPersonById(id);
+        personService.deletePersonById(id);
+        return ResponseEntity.ok().body(pod);
     }
 
     @PutMapping("person/{id}")
     public ResponseEntity<PersonOutputDto> updatePerson(@PathVariable String id,@RequestBody PersonInputDto person) {
-        try {
-            person.setId_persona(id);
-            return ResponseEntity.ok().body(personService.updatePerson(person));
-        } catch (Exception e) {
-            throw e;
-        }
+        person.setId_persona(id);
+        return ResponseEntity.ok().body(personService.updatePerson(person));
     }
 
 

@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -85,5 +87,15 @@ public class PersonServiceImpl implements PersonService {
         PersonMapper.INSTANCE.updatePersonFromDto(person,p);
         return personRepository.save(p)
                 .personToPersonOutputDto();
+    }
+
+    public List<PersonOutputDto> getCustomQuery(HashMap<String, Object> data){
+        if(data.get("orderByDirection").equals("greater")){
+            return personRepository.getGreaterQuery(data);
+        }else if(data.get("orderByDirection").equals("less")){
+            return personRepository.getLessQuery(data);
+        }else{
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"El parametro orderByDirection no se ha especificado o no es correcto");
+        }
     }
 }

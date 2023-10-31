@@ -59,6 +59,18 @@ public class Persona {
         this.termination_date=personInputDto.getTermination_date();
     }
 
+    public Persona(String id_persona, String usuario, String password, String name, String surname, String company_email, String personal_email, String city, Date created_date) {
+        this.id_persona = id_persona;
+        this.usuario = usuario;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.company_email = company_email;
+        this.personal_email = personal_email;
+        this.city = city;
+        this.created_date = created_date;
+    }
+
     public PersonOutputDto personToPersonOutputDto() {
         return new PersonOutputDto(
                 this.id_persona,

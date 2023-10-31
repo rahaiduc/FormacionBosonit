@@ -6,6 +6,7 @@ import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
 import com.block7crudvalidation.domain.Mappers.PersonMapper;
 import com.block7crudvalidation.domain.Persona;
 import com.block7crudvalidation.repository.PersonRepository;
+import com.block7crudvalidation.repository.PersonRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Autowired
     PersonRepository personRepository;
+
 
     @Override
     public PersonOutputDto addPerson(PersonInputDto person) {
@@ -89,13 +91,10 @@ public class PersonServiceImpl implements PersonService {
                 .personToPersonOutputDto();
     }
 
-    public List<PersonOutputDto> getCustomQuery(HashMap<String, Object> data){
-        if(data.get("orderByDirection").equals("greater")){
-            return personRepository.getGreaterQuery(data);
-        }else if(data.get("orderByDirection").equals("less")){
-            return personRepository.getLessQuery(data);
-        }else{
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"El parametro orderByDirection no se ha especificado o no es correcto");
-        }
+    public List<PersonOutputDto> getGreaterQuery(HashMap<String, Object> data){
+        return personRepository.getGreaterQuery(data);
+    }
+    public List<PersonOutputDto> getLessQuery(HashMap<String, Object> data){
+        return personRepository.getLessQuery(data);
     }
 }

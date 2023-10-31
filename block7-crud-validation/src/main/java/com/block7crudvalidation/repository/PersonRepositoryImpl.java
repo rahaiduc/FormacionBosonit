@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class PersonRepositoryImpl {
+public class PersonRepositoryImpl implements PersonRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -30,22 +30,29 @@ public class PersonRepositoryImpl {
         conditions.forEach((field, value) -> {
             switch (field) {
                 case "usuario":
-                    predicates.add(cb.greaterThan(root.get(field),(String) conditions.get("dateCondition")));
+                    predicates.add(cb.greaterThan(root.get(field),(String) conditions.get("usuario")));
                     break;
                 case "name":
-                    predicates.add(cb.greaterThan(root.get(field),(String) conditions.get("dateCondition")));
+                    predicates.add(cb.greaterThan(root.get(field),(String) conditions.get("name")));
                     break;
                 case "surname":
-                    predicates.add(cb.greaterThan(root.get(field),(String) conditions.get("dateCondition")));
+                    predicates.add(cb.greaterThan(root.get(field),(String) conditions.get("surname")));
 
                     break;
                 case "createdDate":
-                    predicates.add(cb.greaterThan(root.get(field),(Date) conditions.get("dateCondition")));
+                    predicates.add(cb.greaterThan(root.get(field),(Date) conditions.get("createdDate")));
                     break;
             }
         });
-        query.select(root)
-                .where(predicates.toArray(new Predicate[predicates.size()]));
+        if(conditions.get("orderBy").equals("usuario")) {
+            query.select(root)
+                    .where(predicates.toArray(new Predicate[predicates.size()]))
+                    .orderBy(conditions.get("orderByDirection").equals("desc") ? cb.desc(root.get("usuario")) : cb.asc(root.get("usuario")));
+        }else {
+            query.select(root)
+                    .where(predicates.toArray(new Predicate[predicates.size()]))
+                    .orderBy(conditions.get("orderByDirection").equals("desc") ? cb.desc(root.get("name")) : cb.asc(root.get("name")));
+        }
         return entityManager
                 .createQuery(query)
                 .getResultList()
@@ -66,22 +73,29 @@ public class PersonRepositoryImpl {
         conditions.forEach((field, value) -> {
             switch (field) {
                 case "usuario":
-                    predicates.add(cb.lessThan(root.get(field),(String) conditions.get("dateCondition")));
+                    predicates.add(cb.lessThan(root.get(field),(String) conditions.get("usuario")));
                     break;
                 case "name":
-                    predicates.add(cb.lessThan(root.get(field),(String) conditions.get("dateCondition")));
+                    predicates.add(cb.lessThan(root.get(field),(String) conditions.get("name")));
                     break;
                 case "surname":
-                    predicates.add(cb.lessThan(root.get(field),(String) conditions.get("dateCondition")));
+                    predicates.add(cb.lessThan(root.get(field),(String) conditions.get("surname")));
 
                     break;
                 case "createdDate":
-                    predicates.add(cb.lessThan(root.get(field),(Date) conditions.get("dateCondition")));
+                    predicates.add(cb.lessThan(root.get(field),(Date) conditions.get("createdDate")));
                     break;
             }
         });
-        query.select(root)
-                .where(predicates.toArray(new Predicate[predicates.size()]));
+        if(conditions.get("orderBy").equals("usuario")) {
+            query.select(root)
+                    .where(predicates.toArray(new Predicate[predicates.size()]))
+                    .orderBy(conditions.get("orderByDirection").equals("desc") ? cb.desc(root.get("usuario")) : cb.asc(root.get("usuario")));
+        }else{
+            query.select(root)
+                    .where(predicates.toArray(new Predicate[predicates.size()]))
+                    .orderBy(conditions.get("orderByDirection").equals("desc") ? cb.desc(root.get("name")) : cb.asc(root.get("name")));
+        }
         return entityManager
                 .createQuery(query)
                 .getResultList()

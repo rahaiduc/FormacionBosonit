@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface PersonRepository extends JpaRepository<Persona, String> {
+public interface PersonRepository extends JpaRepository<Persona, String>,PersonRepositoryCustom {
     @Query("SELECT t FROM Persona t WHERE t.name=?1")
     List<Persona> findByName(String nombre);
 

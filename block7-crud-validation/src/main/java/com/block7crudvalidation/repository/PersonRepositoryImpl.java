@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 
@@ -56,11 +57,12 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                     .orderBy(conditions.get("orderByDirection").equals("desc") ? cb.desc(root.get("name")) : cb.asc(root.get("name")));
         }
         return entityManager
-                .createQuery(query)
+                .createQuery(query).setFirstResult((pageable.getPageNumber() * pageable.getPageSize())+1).setMaxResults(pageable.getPageSize())
                 .getResultList()
                 .stream()
                 .map(Persona::personToPersonOutputDto)
                 .toList();
+
     }
 
 
@@ -100,7 +102,7 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                     .orderBy(conditions.get("orderByDirection").equals("desc") ? cb.desc(root.get("name")) : cb.asc(root.get("name")));
         }
         return entityManager
-                .createQuery(query)
+                .createQuery(query).setFirstResult((pageable.getPageNumber() * pageable.getPageSize())+1).setMaxResults(pageable.getPageSize())
                 .getResultList()
                 .stream()
                 .map(Persona::personToPersonOutputDto)

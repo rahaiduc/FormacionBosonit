@@ -55,7 +55,7 @@ public class ControllerPersona {
                                                         @RequestParam(required = false) String dateCondition,
                                                         @RequestParam(defaultValue = "usuario", required = false) String orderBy,
                                                         @RequestParam(defaultValue = "asc", required = false) String orderByDirection,
-                                                        @RequestParam(required = false) Integer pageNumber,
+                                                        @RequestParam(defaultValue = "0", required = false) Integer pageNumber,
                                                         @RequestParam(defaultValue = "10", required = false) Integer pageSize){
         HashMap<String, Object> data = new HashMap<>();
         if(usuario != null) data.put("usuario",usuario);
@@ -86,8 +86,8 @@ public class ControllerPersona {
         if(dateCondition != null) data.put("dateCondition",dateCondition);
         if(orderBy != null) data.put("orderBy",orderBy);
         if(orderByDirection != null) data.put("orderByDirection",orderByDirection);
-        if(pageNumber != null) data.put("pageNumber",pageNumber);
-        if(pageSize != null) data.put("pageSize",pageSize);
+        if(pageNumber != null) data.put("pageNumber",pageNumber);// else data.put("pageNumber",0);
+        if(pageSize != null) data.put("pageSize",pageSize);// else data.put("pageSize",10);
         return personService.getLessQuery(data);
     }
 

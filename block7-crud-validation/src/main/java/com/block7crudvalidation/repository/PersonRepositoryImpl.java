@@ -8,6 +8,8 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.data.domain.Pageable;
+
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +21,7 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
     private EntityManager entityManager;
 
     public List<PersonOutputDto> getGreaterQuery(
-            HashMap<String, Object> conditions) {
+            HashMap<String, Object> conditions, Pageable pageable) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Persona> query = cb.createQuery(Persona.class);
@@ -61,8 +63,9 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
                 .toList();
     }
 
+
     public List<PersonOutputDto> getLessQuery(
-            HashMap<String, Object> conditions) {
+            HashMap<String, Object> conditions,Pageable pageable) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Persona> query = cb.createQuery(Persona.class);

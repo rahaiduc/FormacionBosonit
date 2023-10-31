@@ -92,9 +92,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     public List<PersonOutputDto> getGreaterQuery(HashMap<String, Object> data){
-        return personRepository.getGreaterQuery(data);
+        PageRequest pageRequest=PageRequest.of((Integer)data.get("pageNumber"),(Integer)data.get("pageSize"));
+
+        return personRepository.getGreaterQuery(data,pageRequest);
     }
     public List<PersonOutputDto> getLessQuery(HashMap<String, Object> data){
-        return personRepository.getLessQuery(data);
+        PageRequest pageRequest=PageRequest.of((Integer)data.get("pageNumber"),(Integer)data.get("pageSize"));
+        return personRepository.getLessQuery(data,pageRequest);
     }
 }

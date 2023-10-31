@@ -56,7 +56,7 @@ public class ControllerPersona {
                                                         @RequestParam(defaultValue = "usuario", required = false) String orderBy,
                                                         @RequestParam(defaultValue = "asc", required = false) String orderByDirection,
                                                         @RequestParam(required = false) Integer pageNumber,
-                                                        @RequestParam(/*defaultValue = "10",*/ required = false) Integer pageSize){
+                                                        @RequestParam(defaultValue = "10", required = false) Integer pageSize){
         HashMap<String, Object> data = new HashMap<>();
         if(usuario != null) data.put("usuario",usuario);
         if(name != null) data.put("name",name);
@@ -77,7 +77,7 @@ public class ControllerPersona {
                                            @RequestParam(defaultValue = "usuario", required = false) String orderBy,
                                            @RequestParam(defaultValue = "asc", required = false) String orderByDirection,
                                            @RequestParam(required = false) Integer pageNumber,
-                                           @RequestParam(/*defaultValue = "10",*/ required = false) Integer pageSize){
+                                           @RequestParam(defaultValue = "10", required = false) Integer pageSize){
         HashMap<String, Object> data = new HashMap<>();
         if(usuario != null) data.put("usuario",usuario);
         if(name != null) data.put("name",name);

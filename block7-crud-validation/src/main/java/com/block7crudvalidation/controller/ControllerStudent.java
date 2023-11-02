@@ -31,64 +31,35 @@ public class ControllerStudent {
 
     @PostMapping
     public ResponseEntity<StudentSimpleOutputDto> addStudent(@Valid @RequestBody StudentInputDto student) {
-        try {
             URI location = URI.create("/estudiante");
             return ResponseEntity.created(location).body(studentService.addStudent(student));
-        }
-        catch (Exception e){
-            //Tengo un metodo handler que maneja la excepcion
-            throw e;
-        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getStudentById(@PathVariable String id, @RequestParam(value = "outputType",defaultValue = "simple") String outputType) {
-        try {
             if(outputType.equals("full")){
                 return ResponseEntity.ok().body(studentService.getFullStudentById(id));
             }else{
                 return ResponseEntity.ok().body(studentService.getSimpleStudentById(id));
             }
-        } catch (Exception e) {
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
-        }
     }
 
-   /* @GetMapping("/nombre/{nombre}")
-    public List<Persona> getPersonByName(@PathVariable String nombre) {
-        try {
-            return studentService.getPersonByName(nombre);
-        } catch (Exception e) {
-            throw e;
-        }
-    }*/
+
 
     @GetMapping
     public List<StudentSimpleOutputDto> getAllStudents() {
-        try{
             return studentService.getAllStudents();
-        }catch (Exception e){
-            throw e;
-        }
     }
 
     @DeleteMapping("/{id}")
     public void deleteStudentById(@PathVariable String id) {
-        try {
             studentService.deleteStudentById(id);
-        } catch (Exception e) {
-            throw e;
-        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<StudentSimpleOutputDto> updateStudent(@PathVariable String id,@RequestBody StudentInputDto student) {
-        try {
             student.setId_student(id);
             return ResponseEntity.ok().body(studentService.updateStudent(student));
-        } catch (Exception e) {
-            throw e;
-        }
     }
 
     @PutMapping("/addAsignaturas/{id}")

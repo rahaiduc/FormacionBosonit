@@ -27,60 +27,31 @@ public class ControllerAsignatura {
 
     @PostMapping
     public ResponseEntity<AsignaturaOutputDto> addAsignatura(@Valid @RequestBody AsignaturaInputDto asignatura) {
-        try {
             URI location = URI.create("/asignatura");
             return ResponseEntity.created(location).body(asignaturaService.addAsignatura(asignatura));
-        }
-        catch (Exception e){
-            //Tengo un metodo handler que maneja la excepcion
-            throw e;
-        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AsignaturaOutputDto> getAsignaturaById(@PathVariable String id) {
-        try {
             return ResponseEntity.ok().body(asignaturaService.getAsignaturaById(id));
-        } catch (Exception e) {
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
-        }
     }
 
-   /* @GetMapping("/nombre/{nombre}")
-    public List<Persona> getPersonByName(@PathVariable String nombre) {
-        try {
-            return studentService.getPersonByName(nombre);
-        } catch (Exception e) {
-            throw e;
-        }
-    }*/
+
 
     @GetMapping
     public List<AsignaturaOutputDto> getAllAsignaturas() {
-        try{
             return asignaturaService.getAllAsignaturas();
-        }catch (Exception e){
-            throw e;
-        }
     }
 
     @DeleteMapping("/{id}")
     public void deleteAsignaturaById(@PathVariable String id) {
-        try {
             asignaturaService.deleteAsignaturaById(id);
-        } catch (Exception e) {
-            throw e;
-        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<AsignaturaOutputDto> updateAsignatura(@PathVariable String id,@RequestBody AsignaturaInputDto asignatura) {
-        try {
             asignatura.setId_asignatura(id);
             return ResponseEntity.ok().body(asignaturaService.updateAsignatura(asignatura));
-        } catch (Exception e) {
-            throw e;
-        }
     }
 
 

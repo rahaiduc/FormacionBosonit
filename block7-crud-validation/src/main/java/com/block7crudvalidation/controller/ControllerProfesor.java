@@ -27,60 +27,31 @@ public class ControllerProfesor {
 
     @PostMapping
     public ResponseEntity<ProfesorOutputDto> addProfesor(@Valid @RequestBody ProfesorInputDto profesor) {
-        try {
             URI location = URI.create("/profesor");
             return ResponseEntity.created(location).body(profesorService.addProfesor(profesor));
-        }
-        catch (Exception e){
-            //Tengo un metodo handler que maneja la excepcion
-            throw e;
-        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProfesorOutputDto> getProfesorById(@PathVariable String id) {
-        try {
             return ResponseEntity.ok().body(profesorService.getProfesorById(id));
-        } catch (Exception e) {
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
-        }
     }
 
-   /* @GetMapping("/nombre/{nombre}")
-    public List<Persona> getPersonByName(@PathVariable String nombre) {
-        try {
-            return studentService.getPersonByName(nombre);
-        } catch (Exception e) {
-            throw e;
-        }
-    }*/
+
 
     @GetMapping
     public List<ProfesorOutputDto> getAllProfesors() {
-        try{
             return profesorService.getAllProfesors();
-        }catch (Exception e){
-            throw e;
-        }
     }
 
     @DeleteMapping("/{id}")
     public void deleteProfesirById(@PathVariable String id) {
-        try {
             profesorService.deleteProfesorById(id);
-        } catch (Exception e) {
-            throw e;
-        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProfesorOutputDto> updateProfesor(@PathVariable String id,@RequestBody ProfesorInputDto profesor) {
-        try {
             profesor.setId_profesor(id);
             return ResponseEntity.ok().body(profesorService.updateProfesor(profesor));
-        } catch (Exception e) {
-            throw e;
-        }
     }
 
 

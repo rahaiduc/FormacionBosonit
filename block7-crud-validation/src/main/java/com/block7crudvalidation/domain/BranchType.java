@@ -1,6 +1,6 @@
 package com.block7crudvalidation.domain;
 
-public enum branchType {
+public enum BranchType {
     Front,
     Back,
     FullStack

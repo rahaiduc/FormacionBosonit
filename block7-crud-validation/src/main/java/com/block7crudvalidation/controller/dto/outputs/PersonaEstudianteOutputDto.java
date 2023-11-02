@@ -2,7 +2,7 @@ package com.block7crudvalidation.controller.dto.outputs;
 
 import com.block7crudvalidation.domain.Asignatura;
 import com.block7crudvalidation.domain.Profesor;
-import com.block7crudvalidation.domain.branchType;
+import com.block7crudvalidation.domain.BranchType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

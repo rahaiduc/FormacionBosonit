@@ -40,7 +40,7 @@ public class Student {
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(10) DEFAULT 'FRONT'", nullable = false)
-    private branchType branch;
+    private BranchType branch;
 
     @ManyToMany
     @JoinTable(

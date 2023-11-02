@@ -33,7 +33,7 @@ public class Profesor {
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(10) DEFAULT 'FRONT'", nullable = false)
-    private branchType branch;
+    private BranchType branch;
 
     @OneToMany(mappedBy = "profesor", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Student> students=new HashSet<>();

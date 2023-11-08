@@ -49,15 +49,15 @@ public class ControllerPersona {
         return personService.getAllPersons();
     }
 
-    @GetMapping("/greaterQuery")
-    public List<PersonOutputDto> greaterQuery(@RequestParam(required = false) String usuario,@RequestParam(required = false) String name,
+    @GetMapping("/customQuery")
+    public List<PersonOutputDto> customQuery(@RequestParam(required = false) String usuario,@RequestParam(required = false) String name,
                                                         @RequestParam(required = false) String surname,
                                                         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date createdDate,
-                                                        @RequestParam(required = false) String dateCondition,
+                                                        @RequestParam(defaultValue = "gt",required = false) String dateCondition,
                                                         @RequestParam(defaultValue = "usuario", required = false) String orderBy,
                                                         @RequestParam(defaultValue = "asc", required = false) String orderByDirection,
                                                         @RequestParam Integer pageNumber,
-                                                        @RequestParam(defaultValue = "10", required = false) Integer pageSize){
+                                                        @RequestParam(defaultValue = "3", required = false) Integer pageSize){
         HashMap<String, Object> data = new HashMap<>();
         if(usuario != null) data.put("usuario",usuario);
         if(name != null) data.put("name",name);
@@ -68,30 +68,8 @@ public class ControllerPersona {
         if(orderByDirection != null) data.put("orderByDirection",orderByDirection);
         if(pageNumber != null) data.put("pageNumber",pageNumber);
         if(pageSize != null) data.put("pageSize",pageSize);
-        return personService.getGreaterQuery(data);
+        return personService.getCustomQuery(data);
     }
-    @GetMapping("/lessQuery")
-    public List<PersonOutputDto> lessQuery(@RequestParam(required = false) String usuario,@RequestParam(required = false) String name,
-                                           @RequestParam(required = false) String surname,
-                                           @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date createdDate,
-                                           @RequestParam(required = false) String dateCondition,
-                                           @RequestParam(defaultValue = "usuario", required = false) String orderBy,
-                                           @RequestParam(defaultValue = "asc", required = false) String orderByDirection,
-                                           @RequestParam Integer pageNumber,
-                                           @RequestParam(defaultValue = "10", required = false) Integer pageSize){
-        HashMap<String, Object> data = new HashMap<>();
-        if(usuario != null) data.put("usuario",usuario);
-        if(name != null) data.put("name",name);
-        if(surname != null) data.put("surname",surname);
-        if(createdDate != null) data.put("createdDate",createdDate);
-        if(dateCondition != null) data.put("dateCondition",dateCondition);
-        if(orderBy != null) data.put("orderBy",orderBy);
-        if(orderByDirection != null) data.put("orderByDirection",orderByDirection);
-        if(pageNumber != null) data.put("pageNumber",pageNumber);
-        if(pageSize != null) data.put("pageSize",pageSize);
-        return personService.getLessQuery(data);
-    }
-
 
 
     @GetMapping("person/{id}")

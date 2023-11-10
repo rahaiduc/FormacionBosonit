@@ -17,7 +17,7 @@ public class StudentFullOutputDto {
     int num_hours_week;
     String comments;
     BranchType branch;
-    PersonOutputDto personOutputDto;
-    ProfesorOutputDto profesorOutputDto;
+    String id_persona;
+    String id_profesor;
     Set<AsignaturaOutputDto> asignaturas;
 }

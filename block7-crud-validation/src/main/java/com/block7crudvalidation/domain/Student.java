@@ -57,8 +57,8 @@ public class Student {
                 this.num_hours_week,
                 this.comments,
                 this.branch,
-                this.persona.personToPersonOutputDto(),
-                this.profesor.ProfesorToProfesorOutputDto(),
+                this.persona.getId_persona(),
+                this.profesor.getId_profesor(),
                 this.asignaturas.stream().map(Asignatura::AsignaturaToAsignaturaOutputDto).collect(Collectors.toSet())
         );
     }

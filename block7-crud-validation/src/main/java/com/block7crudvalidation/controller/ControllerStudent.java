@@ -57,9 +57,9 @@ public class ControllerStudent {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentSimpleOutputDto> updateStudent(@PathVariable String id,@RequestBody StudentInputDto student) {
-            student.setId_student(id);
-            return ResponseEntity.ok().body(studentService.updateStudent(student));
+    public ResponseEntity<StudentSimpleOutputDto> updateStudent(@PathVariable String id,@RequestBody StudentInputDto studentInputDto) {
+            studentInputDto.setId_student(id);
+            return ResponseEntity.ok().body(studentService.updateStudent(studentInputDto));
     }
 
     @PutMapping("/addAsignaturas/{id}")

@@ -98,9 +98,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentSimpleOutputDto updateStudent(StudentInputDto Student) {
-        Student s=studentRepository.findById(Student.getId_persona()).orElseThrow();
-        StudentMapper.INSTANCE.updateStudentFromDto(Student,s);
+    public StudentSimpleOutputDto updateStudent(StudentInputDto studentInputDto) {
+        Student s=studentRepository.findById(studentInputDto.getId_student()).orElseThrow();
+        StudentMapper.INSTANCE.updateStudentFromDto(studentInputDto,s);
         return studentRepository.save(s).studentToStudentSimpleOutputDto();
     }
 

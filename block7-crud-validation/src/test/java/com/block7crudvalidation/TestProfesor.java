@@ -66,10 +66,10 @@ public class TestProfesor {
     @DisplayName("Add profesor")
     public void addProfesorTest() throws Exception {
         //Insercion correcta
-        ProfesorInputDto profesorInputDto=new ProfesorInputDto("3","4","Profesor","Front");
+        ProfesorInputDto profesorInputDto=new ProfesorInputDto("3","6","Profesor","Front");
         String contenido=new ObjectMapper().writeValueAsString(profesorInputDto);
         this.mockMvc.perform(post("/profesor").contentType(MediaType.APPLICATION_JSON).content(contenido)).andExpect(status().is2xxSuccessful()).andReturn();
-        this.mockMvc.perform(get("/profesor/1")).andDo(print()).andExpect(status().isOk()).andReturn();
+        this.mockMvc.perform(get("/profesor/3")).andDo(print()).andExpect(status().isOk()).andReturn();
 
 
         //Insercion no correcta
@@ -87,7 +87,7 @@ public class TestProfesor {
         }catch (HttpClientErrorException e){
             Assertions.assertEquals(e.getMessage(),"Esta persona ya tiene un profesor asignado");
         }
-        ProfesorInputDto profesorInputDto4=new ProfesorInputDto("4","2","Profesor","Front");
+        ProfesorInputDto profesorInputDto4=new ProfesorInputDto("4","3","Profesor","Front");
         contenido=new ObjectMapper().writeValueAsString(profesorInputDto3);
         try {
             this.mockMvc.perform(post("/profesor").contentType(MediaType.APPLICATION_JSON).content(contenido)).andExpect(status().is4xxClientError()).andReturn();
@@ -136,7 +136,7 @@ public class TestProfesor {
         this.mockMvc.perform(put("/profesor/2").contentType(MediaType.APPLICATION_JSON).content(contenido)).andExpect(status().is2xxSuccessful()).andReturn();
         MvcResult result=this.mockMvc.perform(get("/profesor/2")).andDo(print()).andExpect(status().isOk()).andReturn();
         String resultado=result.getResponse().getContentAsString();
-        ProfesorOutputDto profesorOutputDto=new ObjectMapper().readValue(contenido, new TypeReference<ProfesorOutputDto>() {   });
+        ProfesorOutputDto profesorOutputDto=new ObjectMapper().readValue(resultado, new TypeReference<ProfesorOutputDto>() {   });
         Assertions.assertEquals(BranchType.Back,profesorOutputDto.getBranch());
     }
 

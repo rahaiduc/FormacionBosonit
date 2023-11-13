@@ -56,17 +56,26 @@ public class Block7CrudValidationApplication {
         Profesor profesor= ProfesorMapper.INSTANCE.profesorInputDtoToProfesor(profesorInputDto);
         profesor.setPersona(personRepository.findById(profesorInputDto.getId_persona()).orElseThrow());
         profesorRepository.save(profesor);
-        ProfesorInputDto profesorInputDto2=new ProfesorInputDto("2","3","Profesor","Front");
+        ProfesorInputDto profesorInputDto2=new ProfesorInputDto("2","2","Profesor","Front");
         Profesor profesor2= ProfesorMapper.INSTANCE.profesorInputDtoToProfesor(profesorInputDto2);
         profesor2.setPersona(personRepository.findById(profesorInputDto2.getId_persona()).orElseThrow());
         profesorRepository.save(profesor2);
         /*Poblamos la BDD con estudiantes*/
-        StudentInputDto studentInputDto=new StudentInputDto("1","2","1",35,"Estudiante","Front");
+        StudentInputDto studentInputDto=new StudentInputDto("1","3","1",35,"Estudiante","Front");
         Student student= StudentMapper.INSTANCE.studentInputDtoToStudent(studentInputDto);
         student.setPersona(personRepository.findById(studentInputDto.getId_persona()).orElseThrow());
         student.setProfesor(profesorRepository.findById(studentInputDto.getId_profesor()).orElseThrow());
         studentRepository.save(student);
-
+        StudentInputDto studentInputDto2=new StudentInputDto("2","4","2",35,"Estudiante","Front");
+        Student student2= StudentMapper.INSTANCE.studentInputDtoToStudent(studentInputDto2);
+        student2.setPersona(personRepository.findById(studentInputDto2.getId_persona()).orElseThrow());
+        student2.setProfesor(profesorRepository.findById(studentInputDto2.getId_profesor()).orElseThrow());
+        studentRepository.save(student2);
+        StudentInputDto studentInputDto3=new StudentInputDto("3","5","2",35,"Estudiante","Front");
+        Student student3= StudentMapper.INSTANCE.studentInputDtoToStudent(studentInputDto3);
+        student3.setPersona(personRepository.findById(studentInputDto3.getId_persona()).orElseThrow());
+        student3.setProfesor(profesorRepository.findById(studentInputDto3.getId_profesor()).orElseThrow());
+        studentRepository.save(student3);
         /*Poblamos la BDD con asignaturas*/
         AsignaturaInputDto asignaturaInputDto=new AsignaturaInputDto("1","Sistemas Distribuidos","Asignatura",new Date(),new Date());
         AsignaturaInputDto asignaturaInputDto2=new AsignaturaInputDto("2","Angular","Asignatura",new Date(),new Date());

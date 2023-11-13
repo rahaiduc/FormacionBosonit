@@ -64,29 +64,29 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentFullOutputDto getFullStudentById(String id) {
-        return studentRepository.findById(id).orElseThrow().studentToStudentFulltOutputDto();
+        return studentRepository.findById(id).orElseThrow(()->new NoSuchElementException("id no encontrado del estudiante "+id)).studentToStudentFulltOutputDto();
     }
 
     @Override
     public StudentSimpleOutputDto getSimpleStudentById(String id) {
-        return studentRepository.findById(id).orElseThrow().studentToStudentSimpleOutputDto();
+        return studentRepository.findById(id).orElseThrow(()->new NoSuchElementException("id no encontrado del estudiante "+id)).studentToStudentSimpleOutputDto();
     }
 
     @Override
     public void deleteStudentById(String id) {
-        Student student = studentRepository.findById(id).orElseThrow();
-        Persona persona=personRepository.findById(student.getPersona().getId_persona()).orElseThrow();
-        persona.setStudent(null);
-        personRepository.save(persona);
-        Profesor profesor=profesorRepository.findById(student.getProfesor().getId_profesor()).orElseThrow();
-        profesor.getStudents().remove(student);
-        profesorRepository.save(profesor);
+        Student student = studentRepository.findById(id).orElseThrow(()->new NoSuchElementException("id no encontrado del estudiante "+id));
         Set<Asignatura> asignaturaList = student.getAsignaturas();
         for(Asignatura asignatura: asignaturaList){
             asignatura.getStudents().remove(student);
             asignaturaRepository.save(asignatura);
         }
+        Profesor profesor=profesorRepository.findById(student.getProfesor().getId_profesor()).orElseThrow(()->new NoSuchElementException("id no encontrado del profesor "+id));
+        profesor.getStudents().remove(student);
+        profesorRepository.save(profesor);
         studentRepository.deleteById(id);
+        Persona persona=personRepository.findById(student.getPersona().getId_persona()).orElseThrow(()->new NoSuchElementException("id no encontrado de la persona "+id));
+        persona.setStudent(null);
+        personRepository.save(persona);
     }
 
     @Override

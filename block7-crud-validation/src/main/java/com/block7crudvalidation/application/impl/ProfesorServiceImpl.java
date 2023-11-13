@@ -61,12 +61,11 @@ public class ProfesorServiceImpl implements ProfesorService {
     public void deleteProfesorById(String id) {
         Profesor profesor = profesorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("404 - No existe el profesor"));
         Persona persona=personRepository.findById(profesor.getPersona().getId_persona()).orElseThrow();
-        persona.setProfesor(null);
-        personRepository.save(persona);
         for(Student student: profesor.getStudents()){
             studentService.deleteStudentById(student.getId_student());
         }
-        profesorRepository.deleteById(id);
+        persona.setProfesor(null);
+        personRepository.save(persona);
     }
 
     @Override

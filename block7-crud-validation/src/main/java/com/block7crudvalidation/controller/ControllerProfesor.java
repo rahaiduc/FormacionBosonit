@@ -44,7 +44,7 @@ public class ControllerProfesor {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProfesirById(@PathVariable String id) {
+    public void deleteProfesorById(@PathVariable String id) {
             profesorService.deleteProfesorById(id);
     }
 

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,7 @@ public class AsignaturaServiceImpl implements AsignaturaService {
 
     @Override
     public AsignaturaOutputDto getAsignaturaById(String id) {
-        return asignaturaRepository.findById(id).orElseThrow().AsignaturaToAsignaturaOutputDto();
+        return asignaturaRepository.findById(id).orElseThrow(()->new NoSuchElementException("404 - Asignatura no encontrada")).AsignaturaToAsignaturaOutputDto();
     }
 
     @Override

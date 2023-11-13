@@ -1,6 +1,7 @@
 package com.block7crudvalidation.application.impl;
 
 import com.block7crudvalidation.application.interfaces.ProfesorService;
+import com.block7crudvalidation.application.interfaces.StudentService;
 import com.block7crudvalidation.controller.dto.inputs.ProfesorInputDto;
 import com.block7crudvalidation.controller.dto.outputs.ProfesorOutputDto;
 import com.block7crudvalidation.domain.Mappers.PersonMapper;
@@ -33,13 +34,15 @@ public class ProfesorServiceImpl implements ProfesorService {
     private ProfesorRepository profesorRepository;
     @Autowired
     private AsignaturaRepository asignaturaRepository;
+    @Autowired
+    StudentService studentService;
     @Override
     public ProfesorOutputDto addProfesor(ProfesorInputDto profesorInputDto) {
         if( profesorInputDto.getBranch()==null || profesorInputDto.getBranch().isBlank()){
             //Lanzo la excepcion para que la recoja el controlador y la maneje con un metodo handler
             throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,"Algun/os valores no pueden ser nulos");
         }
-        Persona persona=personRepository.findById(profesorInputDto.getId_persona()).orElseThrow();
+        Persona persona=personRepository.findById(profesorInputDto.getId_persona()).orElseThrow(()-> new NoSuchElementException("404-Persona no existe"));
         if (persona.getProfesor() != null && persona.getProfesor().getId_profesor() != null)throw new NoSuchElementException("Esta persona ya tiene un profesor asignado");
         if (persona.getStudent() != null && persona.getStudent().getId_student() != null)throw new NoSuchElementException("Esta persona es un estudiante");
 
@@ -51,12 +54,18 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public ProfesorOutputDto getProfesorById(String id) {
-        return profesorRepository.findById(id).orElseThrow().ProfesorToProfesorOutputDto();
+        return profesorRepository.findById(id).orElseThrow(()->new NoSuchElementException("404 - No existe el profesor")).ProfesorToProfesorOutputDto();
     }
 
     @Override
     public void deleteProfesorById(String id) {
-        profesorRepository.findById(id).orElseThrow();
+        Profesor profesor = profesorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("404 - No existe el profesor"));
+        Persona persona=personRepository.findById(profesor.getPersona().getId_persona()).orElseThrow();
+        persona.setProfesor(null);
+        personRepository.save(persona);
+        for(Student student: profesor.getStudents()){
+            studentService.deleteStudentById(student.getId_student());
+        }
         profesorRepository.deleteById(id);
     }
 

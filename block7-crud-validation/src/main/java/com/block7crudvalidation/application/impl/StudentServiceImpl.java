@@ -74,7 +74,18 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudentById(String id) {
-        studentRepository.findById(id).orElseThrow();
+        Student student = studentRepository.findById(id).orElseThrow();
+        Persona persona=personRepository.findById(student.getPersona().getId_persona()).orElseThrow();
+        persona.setStudent(null);
+        personRepository.save(persona);
+        Profesor profesor=profesorRepository.findById(student.getProfesor().getId_profesor()).orElseThrow();
+        profesor.getStudents().remove(student);
+        profesorRepository.save(profesor);
+        Set<Asignatura> asignaturaList = student.getAsignaturas();
+        for(Asignatura asignatura: asignaturaList){
+            asignatura.getStudents().remove(student);
+            asignaturaRepository.save(asignatura);
+        }
         studentRepository.deleteById(id);
     }
 

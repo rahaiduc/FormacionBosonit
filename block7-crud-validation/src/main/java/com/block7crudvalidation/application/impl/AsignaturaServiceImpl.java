@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,7 +48,12 @@ public class AsignaturaServiceImpl implements AsignaturaService {
 
     @Override
     public void deleteAsignaturaById(String id) {
-        asignaturaRepository.findById(id).orElseThrow();
+        Asignatura asignatura = asignaturaRepository.findById(id).orElseThrow();
+        Set<Student> studentList = asignatura.getStudents();
+        studentList.forEach(student -> {
+            student.getAsignaturas().remove(asignatura);
+            studentRepository.save(student);
+        });
         asignaturaRepository.deleteById(id);
     }
 

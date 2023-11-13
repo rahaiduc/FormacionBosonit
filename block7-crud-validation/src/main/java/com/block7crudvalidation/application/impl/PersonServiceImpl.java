@@ -1,12 +1,16 @@
 package com.block7crudvalidation.application.impl;
 
 import com.block7crudvalidation.application.interfaces.PersonService;
+import com.block7crudvalidation.application.interfaces.ProfesorService;
+import com.block7crudvalidation.application.interfaces.StudentService;
 import com.block7crudvalidation.controller.dto.inputs.PersonInputDto;
 import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
 import com.block7crudvalidation.domain.Mappers.PersonMapper;
 import com.block7crudvalidation.domain.Persona;
 import com.block7crudvalidation.repository.PersonRepository;
 import com.block7crudvalidation.repository.PersonRepositoryCustom;
+import com.block7crudvalidation.repository.ProfesorRepository;
+import com.block7crudvalidation.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -16,6 +20,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +28,14 @@ public class PersonServiceImpl implements PersonService {
 
     @Autowired
     PersonRepository personRepository;
+    @Autowired
+    StudentRepository studentRepository;
+    @Autowired
+    ProfesorRepository profesorRepository;
+    @Autowired
+    StudentService studentService;
+    @Autowired
+    ProfesorService profesorService;
 
 
     @Override
@@ -70,7 +83,10 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void deletePersonById(String id) {
-        personRepository.findById(id).orElseThrow();
+        Persona persona = personRepository.findById(id)
+                .orElseThrow();
+        if (persona.getProfesor() != null && persona.getProfesor().getId_profesor() != null) profesorService.deleteProfesorById(persona.getProfesor().getId_profesor());
+        if (persona.getStudent() != null && persona.getStudent().getId_student() != null) studentService.deleteStudentById(persona.getStudent().getId_student());
         personRepository.deleteById(id);
     }
     @Override

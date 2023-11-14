@@ -37,6 +37,7 @@ public class PersonServiceImpl implements PersonService {
     @Autowired
     ProfesorService profesorService;
 
+    String noEncontrado;
 
     @Override
     public PersonOutputDto addPerson(PersonInputDto person) {
@@ -61,12 +62,12 @@ public class PersonServiceImpl implements PersonService {
     }
     @Override
     public PersonOutputDto getPersonById(String id){
-        return personRepository.findById(id).orElseThrow(()-> new NoSuchElementException("404-Persona no encontrada"))
+        return personRepository.findById(id).orElseThrow(()-> new NoSuchElementException(noEncontrado))
                 .personToPersonOutputDto();
     }
 
     public PersonOutputDto searchPersonById(String id){
-        Persona p=personRepository.findById(id).orElseThrow(()-> new NoSuchElementException("404-Persona no encontrada"));
+        Persona p=personRepository.findById(id).orElseThrow(()-> new NoSuchElementException(noEncontrado));
         if(p.getStudent()!=null){
             return p.personToPersonaEstudianteOutputDto();
         }else if(p.getProfesor()!=null){
@@ -84,7 +85,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public void deletePersonById(String id) {
         Persona persona = personRepository.findById(id)
-                .orElseThrow(()-> new NoSuchElementException("404-Persona no encontrada"));
+                .orElseThrow(()-> new NoSuchElementException(noEncontrado));
         if (persona.getProfesor() != null && persona.getProfesor().getId_profesor() != null) profesorService.deleteProfesorById(persona.getProfesor().getId_profesor());
         if (persona.getStudent() != null && persona.getStudent().getId_student() != null) studentService.deleteStudentById(persona.getStudent().getId_student());
         personRepository.deleteById(id);
@@ -101,7 +102,7 @@ public class PersonServiceImpl implements PersonService {
     }
     @Override
     public PersonOutputDto updatePerson(PersonInputDto person) {
-        Persona p=personRepository.findById(person.getId_persona()).orElseThrow(()-> new NoSuchElementException("404-Persona no encontrada"));
+        Persona p=personRepository.findById(person.getId_persona()).orElseThrow(()-> new NoSuchElementException(noEncontrado));
         PersonMapper.INSTANCE.updatePersonFromDto(person,p);
         return personRepository.save(p)
                 .personToPersonOutputDto();

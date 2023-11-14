@@ -36,6 +36,8 @@ public class ProfesorServiceImpl implements ProfesorService {
     private AsignaturaRepository asignaturaRepository;
     @Autowired
     StudentService studentService;
+
+    String noEncontrado="404 - No existe el profesor";
     @Override
     public ProfesorOutputDto addProfesor(ProfesorInputDto profesorInputDto) {
         if( profesorInputDto.getBranch()==null || profesorInputDto.getBranch().isBlank()){
@@ -48,18 +50,17 @@ public class ProfesorServiceImpl implements ProfesorService {
 
         Profesor newProfesor=ProfesorMapper.INSTANCE.profesorInputDtoToProfesor(profesorInputDto);
         newProfesor.setPersona(persona);
-       // persona.setProfesor(newProfesor);
         return profesorRepository.save(newProfesor).ProfesorToProfesorOutputDto();
     }
 
     @Override
     public ProfesorOutputDto getProfesorById(String id) {
-        return profesorRepository.findById(id).orElseThrow(()->new NoSuchElementException("404 - No existe el profesor")).ProfesorToProfesorOutputDto();
+        return profesorRepository.findById(id).orElseThrow(()->new NoSuchElementException(noEncontrado)).ProfesorToProfesorOutputDto();
     }
 
     @Override
     public void deleteProfesorById(String id) {
-        Profesor profesor = profesorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("404 - No existe el profesor"));
+        Profesor profesor = profesorRepository.findById(id).orElseThrow(() -> new NoSuchElementException(noEncontrado));
         Persona persona=personRepository.findById(profesor.getPersona().getId_persona()).orElseThrow();
         for(Student student: profesor.getStudents()){
             studentService.deleteStudentById(student.getId_student());
@@ -78,7 +79,7 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public ProfesorOutputDto updateProfesor(ProfesorInputDto Profesor) {
-        Profesor p=profesorRepository.findById(Profesor.getId_profesor()).orElseThrow(() -> new NoSuchElementException("404 - No existe el profesor"));
+        Profesor p=profesorRepository.findById(Profesor.getId_profesor()).orElseThrow(() -> new NoSuchElementException(noEncontrado));
         ProfesorMapper.INSTANCE.updateProfesorFromDto(Profesor,p);
         return profesorRepository.save(p)
                 .ProfesorToProfesorOutputDto();

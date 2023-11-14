@@ -69,23 +69,12 @@ public class ControllerProfesor {
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException nsee) {
-        NoSuchElementException ne=new NoSuchElementException("404-Profesor no encontrada");
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(nsee.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<CustomError> handleEntityNotFoundException() {
-        CustomError ce = new CustomError();
-        ce.setTimestamp(new Date());
-        ce.setHttpCode(HttpStatus.NOT_FOUND.value());
-        ce.setMensaje("Error 404 - Profesor no encontrada");
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(ce);
-    }
+
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(HttpClientErrorException.class)

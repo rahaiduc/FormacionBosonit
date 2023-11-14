@@ -131,23 +131,10 @@ public class ControllerPersona {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<String> handleNoSuchElementException() {
-        NoSuchElementException ne=new NoSuchElementException("404-Persona no encontrada");
+    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException ne) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ne.getMessage());
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<CustomError> handleEntityNotFoundException() {
-        CustomError ce = new CustomError();
-        ce.setTimestamp(new Date());
-        ce.setHttpCode(HttpStatus.NOT_FOUND.value());
-        ce.setMensaje("Error 404 - Persona no encontrada");
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(ce);
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)

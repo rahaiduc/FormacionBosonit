@@ -78,7 +78,7 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public ProfesorOutputDto updateProfesor(ProfesorInputDto Profesor) {
-        Profesor p=profesorRepository.findById(Profesor.getId_profesor()).orElseThrow();
+        Profesor p=profesorRepository.findById(Profesor.getId_profesor()).orElseThrow(() -> new NoSuchElementException("404 - No existe el profesor"));
         ProfesorMapper.INSTANCE.updateProfesorFromDto(Profesor,p);
         return profesorRepository.save(p)
                 .ProfesorToProfesorOutputDto();

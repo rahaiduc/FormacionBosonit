@@ -48,8 +48,8 @@ public class StudentServiceImpl implements StudentService {
             throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,"Algun/os valores no pueden ser nulos");
         }
 
-        Persona persona=personRepository.findById(Student.getId_persona()).orElseThrow();
-        Profesor profesor=profesorRepository.findById(Student.getId_profesor()).orElseThrow();
+        Persona persona=personRepository.findById(Student.getId_persona()).orElseThrow(() -> new NoSuchElementException("404 - No existe la persona"));
+        Profesor profesor=profesorRepository.findById(Student.getId_profesor()).orElseThrow(() -> new NoSuchElementException("404 - No existe el profesor"));
         if (persona.getProfesor() != null && persona.getProfesor().getId_profesor() != null)throw new NoSuchElementException("Esta persona es un profesor");
         if (persona.getStudent() != null && persona.getStudent().getId_student() != null)throw new NoSuchElementException("Esta persona ya tiene un estudiante asignado");
 
@@ -99,28 +99,28 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentSimpleOutputDto updateStudent(StudentInputDto studentInputDto) {
-        Student s=studentRepository.findById(studentInputDto.getId_student()).orElseThrow();
+        Student s=studentRepository.findById(studentInputDto.getId_student()).orElseThrow(() -> new NoSuchElementException("404 - No existe el estudiante"));
         StudentMapper.INSTANCE.updateStudentFromDto(studentInputDto,s);
         return studentRepository.save(s).studentToStudentSimpleOutputDto();
     }
 
     public List<AsignaturaOutputDto> getAsignaturasStudent(String id){
-        Student s=studentRepository.findById(id).orElseThrow();
+        Student s=studentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("404 - No existe el estudiante"));
         return s.getAsignaturas().stream().map(Asignatura::AsignaturaToAsignaturaOutputDto).collect(Collectors.toList());
     }
 
     public StudentFullOutputDto addAsignaturasEstudiante(List<String> idAsignaturas, String idStudent){
-        Student s=studentRepository.findById(idStudent).orElseThrow();
+        Student s=studentRepository.findById(idStudent).orElseThrow(() -> new NoSuchElementException("404 - No existe el estudiante"));
         Set<Asignatura> lista=s.getAsignaturas();
         for(String idAsignatura: idAsignaturas){
-            lista.add(asignaturaRepository.findById(idAsignatura).orElseThrow());
+            lista.add(asignaturaRepository.findById(idAsignatura).orElseThrow(() -> new NoSuchElementException("404 - No se encuentra la asignatura")));
         }
         s.setAsignaturas(lista);
         return studentRepository.save(s).studentToStudentFulltOutputDto();
     }
 
     public StudentFullOutputDto removeAsignaturasEstudiante(List<String> idAsignaturas, String id) {
-        Student s=studentRepository.findById(id).orElseThrow();
+        Student s=studentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("404 - No existe el estudiante"));
         Set<Asignatura> lista=s.getAsignaturas();
         for(String idAsignatura: idAsignaturas){
             lista.remove(asignaturaRepository.findById(idAsignatura).orElseThrow(()-> new NoSuchElementException("El Id de asignatura no existe")));

@@ -39,7 +39,7 @@ public class Block7CrudValidationApplication {
     private AsignaturaRepository asignaturaRepository;
     @PostConstruct
     public void populateDb() {
-
+        /*Poblamos la BDD con personas*/
         personRepository.save(new Persona("1","user1","pass1", "name1","Martinez","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
         personRepository.save(new Persona("2","user2","pass2", "name2", "Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
         personRepository.save(new Persona("3","user3","pass3", "name3", "Gonzalez","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
@@ -52,6 +52,7 @@ public class Block7CrudValidationApplication {
         personRepository.save(new Persona("10","user10","pass10", "name10","Fernandez","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
         personRepository.save(new Persona("11","user11","pass11", "name11","Gutierrez","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
         personRepository.save(new Persona("12","user12","pass12", "name12","San Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
+        /*Poblamos la BDD con profesores*/
         ProfesorInputDto profesorInputDto=new ProfesorInputDto("1","1","Profesor","Front");
         Profesor profesor= ProfesorMapper.INSTANCE.profesorInputDtoToProfesor(profesorInputDto);
         profesor.setPersona(personRepository.findById(profesorInputDto.getId_persona()).orElseThrow());

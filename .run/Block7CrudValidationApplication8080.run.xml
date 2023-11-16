@@ -3,7 +3,7 @@
     <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
     <module name="block7-crud-validation" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.block7crudvalidation.Block7CrudValidationApplication" />
-    <option name="VM_PARAMETERS" value="-Dspring.profiles.active=8080" />
+    <option name="VM_PARAMETERS" value="-Dspring.profiles.active=8080 -DskipTests" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

@@ -40,18 +40,18 @@ public class Block7CrudValidationApplication {
     @PostConstruct
     public void populateDb() {
         /*Poblamos la BDD con personas*/
-        personRepository.save(new Persona("1","user1","pass1", "name1","Martinez","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
-        personRepository.save(new Persona("2","user2","pass2", "name2", "Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
-        personRepository.save(new Persona("3","user3","pass3", "name3", "Gonzalez","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
-        personRepository.save(new Persona("4","user4","pass4", "name4","Fernandez","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
-        personRepository.save(new Persona("5","user5","pass5", "name5","Gutierrez","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
-        personRepository.save(new Persona("6","user6","pass6", "name6","San Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
-        personRepository.save(new Persona("7","user7","pass7", "name7","Martinez","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
-        personRepository.save(new Persona("8","user8","pass8", "name8", "Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
-        personRepository.save(new Persona("9","user9","pass9", "name9", "Gonzalez","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
-        personRepository.save(new Persona("10","user10","pass10", "name10","Fernandez","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
-        personRepository.save(new Persona("11","user11","pass11", "name11","Gutierrez","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
-        personRepository.save(new Persona("12","user12","pass12", "name12","San Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date()));
+        personRepository.save(new Persona("1","user1","pass1", "name1","Martinez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
+        personRepository.save(new Persona("2","user2","pass2", "name2", "Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
+        personRepository.save(new Persona("3","user3","pass3", "name3", "Gonzalez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
+        personRepository.save(new Persona("4","user4","pass4", "name4","Fernandez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
+        personRepository.save(new Persona("5","user5","pass5", "name5","Gutierrez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
+        personRepository.save(new Persona("6","user6","pass6", "name6","San Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
+        personRepository.save(new Persona("7","user7","pass7", "name7","Martinez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
+        personRepository.save(new Persona("8","user8","pass8", "name8", "Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
+        personRepository.save(new Persona("9","user9","pass9", "name9", "Gonzalez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
+        personRepository.save(new Persona("10","user10","pass10", "name10","Fernandez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
+        personRepository.save(new Persona("11","user11","pass11", "name11","Gutierrez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
+        personRepository.save(new Persona("12","user12","pass12", "name12","San Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
         /*Poblamos la BDD con profesores*/
         ProfesorInputDto profesorInputDto=new ProfesorInputDto("1","1","Profesor","Front");
         Profesor profesor= ProfesorMapper.INSTANCE.profesorInputDtoToProfesor(profesorInputDto);

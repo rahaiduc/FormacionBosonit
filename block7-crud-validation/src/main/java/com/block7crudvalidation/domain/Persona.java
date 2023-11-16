@@ -5,12 +5,18 @@ import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
 import com.block7crudvalidation.controller.dto.outputs.PersonaEstudianteOutputDto;
 import com.block7crudvalidation.controller.dto.outputs.PersonaProfesorOutputDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.Id;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="Persona")
@@ -18,7 +24,7 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Persona {
+public class Persona implements UserDetails {
     @jakarta.persistence.Id
     @Id
     @Column(name = "id_persona")
@@ -36,6 +42,8 @@ public class Persona {
     private Date created_date;
     private String imagen_url;
     private Date termination_date;
+    @NotNull
+    private Boolean admin;
 
     @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true)
     private Student student;
@@ -57,9 +65,10 @@ public class Persona {
         this.created_date=personInputDto.getCreated_date();
         this.imagen_url=personInputDto.getImagen_url();
         this.termination_date=personInputDto.getTermination_date();
+        this.admin=personInputDto.isAdmin();
     }
 
-    public Persona(String id_persona, String usuario, String password, String name, String surname, String company_email, String personal_email, String city, Date created_date) {
+    public Persona(String id_persona, String usuario, String password, String name, String surname, String company_email, String personal_email, String city, Date created_date,boolean admin) {
         this.id_persona = id_persona;
         this.usuario = usuario;
         this.password = password;
@@ -69,6 +78,7 @@ public class Persona {
         this.personal_email = personal_email;
         this.city = city;
         this.created_date = created_date;
+        this.admin=admin;
     }
 
     public PersonOutputDto personToPersonOutputDto() {
@@ -110,6 +120,34 @@ public class Persona {
     }
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(admin.equals(false)?Role.USER.name():Role.ADMIN.name()));
+    }
 
+    @Override
+    public String getUsername() {
+        return this.usuario;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
 

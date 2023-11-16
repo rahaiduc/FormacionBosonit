@@ -68,21 +68,21 @@ public class TestPerson {
     @DisplayName("Add persona")
     public void addPersonTest() throws Exception {
         //Insercion correcta
-        PersonInputDto personInputDto=new PersonInputDto("13","usuario4","pass4","Jesus","Maria","abc@gmail.com","abc@gmail.com","vallecas",false,new Date(),null,null);
+        PersonInputDto personInputDto=new PersonInputDto("13","usuario4","pass4","Jesus","Maria","abc@gmail.com","abc@gmail.com","vallecas",false,new Date(),null,null,false);
         String contenido=new ObjectMapper().writeValueAsString(personInputDto);
         this.mockMvc.perform(post("/person").contentType(MediaType.APPLICATION_JSON).content(contenido)).andExpect(status().is2xxSuccessful()).andReturn();
         this.mockMvc.perform(get("/person/13")).andDo(print()).andExpect(status().isOk()).andReturn();
 
 
         //Insercion no correcta
-        PersonInputDto personInputDto2=new PersonInputDto("13",null,"pass4","Jesus","Maria","abc@gmail.com","abc@gmail.com","vallecas",false,new Date(),null,null);
+        PersonInputDto personInputDto2=new PersonInputDto("13",null,"pass4","Jesus","Maria","abc@gmail.com","abc@gmail.com","vallecas",false,new Date(),null,null,false);
         contenido=new ObjectMapper().writeValueAsString(personInputDto2);
         try {
             this.mockMvc.perform(post("/person").contentType(MediaType.APPLICATION_JSON).content(contenido)).andExpect(status().is4xxClientError()).andReturn();
         }catch (HttpClientErrorException e){
             Assertions.assertEquals(e.getMessage(),"Algun/os valores no pueden ser nulos");
         }
-        PersonInputDto personInputDto3=new PersonInputDto("14","usuariousuariousuario","pass4","Jesus","Maria","abc@gmail.com","abc@gmail.com","vallecas",false,new Date(),null,null);
+        PersonInputDto personInputDto3=new PersonInputDto("14","usuariousuariousuario","pass4","Jesus","Maria","abc@gmail.com","abc@gmail.com","vallecas",false,new Date(),null,null,false);
         contenido=new ObjectMapper().writeValueAsString(personInputDto3);
         try {
             this.mockMvc.perform(post("/person").contentType(MediaType.APPLICATION_JSON).content(contenido)).andExpect(status().is4xxClientError()).andReturn();
@@ -133,7 +133,7 @@ public class TestPerson {
     @Test
     @DisplayName("Update persona")
     public void updatePersonTest() throws Exception {
-        PersonInputDto personInputDto=new PersonInputDto(null,"userchange",null,null,null,null,null,null,false,null,null,null);
+        PersonInputDto personInputDto=new PersonInputDto(null,"userchange",null,null,null,null,null,null,false,null,null,null,false);
         String contenido=new ObjectMapper().writeValueAsString(personInputDto);
         this.mockMvc.perform(put("/person/10").contentType(MediaType.APPLICATION_JSON).content(contenido)).andExpect(status().is2xxSuccessful()).andReturn();
         MvcResult result=this.mockMvc.perform(get("/person/10")).andDo(print()).andExpect(status().isOk()).andReturn();

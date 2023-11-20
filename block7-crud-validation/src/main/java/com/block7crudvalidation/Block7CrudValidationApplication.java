@@ -47,7 +47,7 @@ public class Block7CrudValidationApplication {
         personRepository.save(new Persona("5","user5","pass5", "name5","Gutierrez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
         personRepository.save(new Persona("6","user6","pass6", "name6","San Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
         personRepository.save(new Persona("7","user7","pass7", "name7","Martinez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
-        personRepository.save(new Persona("8","user8","pass8", "name8", "Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
+        personRepository.save(new Persona("8","user8","pass8", "name8", "Martin","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),true));
         personRepository.save(new Persona("9","user9","pass9", "name9", "Gonzalez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
         personRepository.save(new Persona("10","user10","pass10", "name10","Fernandez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));
         personRepository.save(new Persona("11","user11","pass11", "name11","Gutierrez","abc@gmail.com","abc@gmail.com","Vallecas", new Date(),false));

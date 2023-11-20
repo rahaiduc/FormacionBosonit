@@ -17,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.MatcherType.mvc;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
@@ -32,6 +32,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -61,11 +62,10 @@ public class SecurityConfiguration {
                 //.addFilterAfter(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(antMatcher("/auth/login")).permitAll()
-                        /*.requestMatchers(HttpMethod.GET).hasAnyRole(ROLE_ADMIN, ROLE_USER)
-                        //.requestMatchers(HttpMethod.POST).hasRole(ROLE_ADMIN)
-                        .requestMatchers(HttpMethod.POST, antMatcher("/persona")).permitAll()
-                        .requestMatchers(HttpMethod.PUT).hasRole(ROLE_ADMIN)
-                        .requestMatchers(HttpMethod.DELETE).hasRole(ROLE_ADMIN)*/
+                        /*.requestMatchers(antMatcher(GET)).hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                        .requestMatchers(antMatcher(POST)).hasRole(ROLE_ADMIN)
+                        .requestMatchers(antMatcher(PUT)).hasRole(ROLE_ADMIN)
+                        .requestMatchers(antMatcher(DELETE)).hasRole(ROLE_ADMIN));*/
                         .anyRequest().authenticated());
 
         return http.build();

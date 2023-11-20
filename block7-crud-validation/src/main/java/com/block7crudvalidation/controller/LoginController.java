@@ -1,4 +1,4 @@
-package com.block7crudvalidation.security;
+package com.block7crudvalidation.controller;
 
 import com.block7crudvalidation.application.interfaces.PersonService;
 import com.block7crudvalidation.controller.dto.inputs.LoginInputDto;
@@ -6,6 +6,9 @@ import com.block7crudvalidation.controller.dto.outputs.LoginOutputDto;
 import com.block7crudvalidation.domain.CustomError;
 import com.block7crudvalidation.domain.Persona;
 import com.block7crudvalidation.repository.PersonRepository;
+import com.block7crudvalidation.security.JwtService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,20 +30,13 @@ public class LoginController {
     PersonService personService;
     @Autowired
     JwtService jwtService;
-
+    private static Logger log= LoggerFactory.getLogger(LoginController.class);
     @PostMapping("/login")
     public ResponseEntity<LoginOutputDto> authenticate(@RequestBody LoginInputDto loginInputDto) {
         String username = loginInputDto.getUsername();
         String password = loginInputDto.getPassword();
 
-        Persona authenticatedUser = personService.authenticate(username,password);
-
-        String jwtToken = jwtService.generateToken(authenticatedUser);
-
-        LoginOutputDto loginResponse = new LoginOutputDto();
-        loginResponse.setToken(jwtToken);
-        loginResponse.setExpiresIn(jwtService.getExpirationTime());
-
+        LoginOutputDto loginResponse = personService.loginPersona(username,password);
         return ResponseEntity.ok(loginResponse);
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -122,7 +122,7 @@ public class Persona implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(admin.equals(false)?Role.USER.name():Role.ADMIN.name()));
+        return List.of(new SimpleGrantedAuthority(admin.equals(false) ? Role.USER.name() : Role.ADMIN.name()));
     }
 
     @Override

@@ -2,12 +2,15 @@ package com.block7crudvalidation.security;
 
 import com.block7crudvalidation.application.impl.PersonServiceImpl;
 import com.block7crudvalidation.application.interfaces.PersonService;
+import com.block7crudvalidation.controller.LoginController;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,6 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private static Logger log= LoggerFactory.getLogger(LoginController.class);
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -35,7 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
-
+        log.info("Empieza");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -44,13 +48,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             final String jwt = authHeader.substring(7);
             final String userEmail = jwtService.extractUsername(jwt);
-
+            log.info("Se ha extraido el username exitosamente");
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+            log.info("Se ha conseguido la autenticacion");
             if (userEmail != null && authentication == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-
+                log.info("Se ha conseguido los user details." + userDetails.getUsername()+ " " +userDetails.getPassword()+ " "+ userDetails.getAuthorities().toString());
                 if (jwtService.isTokenValid(jwt, userDetails)) {
+                    log.info("Se ha validado el token");
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,

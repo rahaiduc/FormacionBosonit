@@ -4,6 +4,7 @@ import com.block7crudvalidation.application.interfaces.PersonService;
 import com.block7crudvalidation.application.interfaces.ProfesorService;
 import com.block7crudvalidation.application.interfaces.StudentService;
 import com.block7crudvalidation.controller.dto.inputs.PersonInputDto;
+import com.block7crudvalidation.controller.dto.outputs.LoginOutputDto;
 import com.block7crudvalidation.controller.dto.outputs.PersonOutputDto;
 import com.block7crudvalidation.domain.Mappers.PersonMapper;
 import com.block7crudvalidation.domain.Persona;
@@ -11,6 +12,7 @@ import com.block7crudvalidation.repository.PersonRepository;
 import com.block7crudvalidation.repository.PersonRepositoryCustom;
 import com.block7crudvalidation.repository.ProfesorRepository;
 import com.block7crudvalidation.repository.StudentRepository;
+import com.block7crudvalidation.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -42,7 +44,8 @@ public class PersonServiceImpl implements PersonService {
     ProfesorService profesorService;
     @Autowired
     AuthenticationManager authenticationManager;
-
+    @Autowired
+    JwtService jwtService;
     String noEncontrado;
 
     @Override
@@ -130,14 +133,20 @@ public class PersonServiceImpl implements PersonService {
     }
 
 
-    public Persona authenticate(String usuario, String password) {
-        authenticationManager.authenticate(
+    public LoginOutputDto loginPersona(String usuario, String password) {
+        /*authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         usuario,
                         password
                 )
-        );
+        );*/
 
-        return personRepository.findByUsuario(usuario).orElseThrow(()->new NoSuchElementException("No se ha encontrado el usuario"));
+        Persona authenticatedUser=personRepository.findByUsuario(usuario).orElseThrow(()->new NoSuchElementException("No se ha encontrado el usuario"));
+        String jwtToken = jwtService.generateToken(authenticatedUser);
+
+        LoginOutputDto loginResponse = new LoginOutputDto();
+        loginResponse.setToken(jwtToken);
+        loginResponse.setExpiresIn(jwtService.getExpirationTime());
+        return loginResponse;
     }
 }

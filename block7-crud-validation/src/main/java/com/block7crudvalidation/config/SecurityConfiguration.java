@@ -59,13 +59,14 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                //.addFilterAfter(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(antMatcher("/auth/login")).permitAll()
-                        /*.requestMatchers(antMatcher(GET)).hasAnyRole(ROLE_ADMIN, ROLE_USER)
-                        .requestMatchers(antMatcher(POST)).hasRole(ROLE_ADMIN)
-                        .requestMatchers(antMatcher(PUT)).hasRole(ROLE_ADMIN)
-                        .requestMatchers(antMatcher(DELETE)).hasRole(ROLE_ADMIN));*/
+                        .requestMatchers(antMatcher(GET)).hasAnyAuthority(ROLE_ADMIN, ROLE_USER)
+                        .requestMatchers(antMatcher(POST)).hasAuthority(ROLE_ADMIN)
+                        .requestMatchers(antMatcher(PUT)).hasAuthority(ROLE_ADMIN)
+                        .requestMatchers(antMatcher(DELETE)).hasAuthority(ROLE_ADMIN)
+                        .requestMatchers(antMatcher("/*")).authenticated()
                         .anyRequest().authenticated());
 
         return http.build();

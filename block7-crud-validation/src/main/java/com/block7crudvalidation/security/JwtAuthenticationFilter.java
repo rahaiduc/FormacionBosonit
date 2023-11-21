@@ -39,21 +39,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
-        log.info("Empieza");
+        log.info("Autenticando al usuario...");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            log.info("Usuario no logueado");
             filterChain.doFilter(request, response);
             return;
         }
 
         try {
             final String jwt = authHeader.substring(7);
-            final String userEmail = jwtService.extractUsername(jwt);
-            log.info("Se ha extraido el username exitosamente");
+            final String username = jwtService.extractUsername(jwt);
+            log.info("Se ha extraido el username");
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            log.info("Se ha conseguido la autenticacion");
-            if (userEmail != null && authentication == null) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-                log.info("Se ha conseguido los user details." + userDetails.getUsername()+ " " +userDetails.getPassword()+ " "+ userDetails.getAuthorities().toString());
+            if (username != null && authentication == null) {
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+                log.info("Se ha conseguido los user details. Username: " + userDetails.getUsername()+ " Password: " +userDetails.getPassword()+ " Authorities: "+ userDetails.getAuthorities().toString());
                 if (jwtService.isTokenValid(jwt, userDetails)) {
                     log.info("Se ha validado el token");
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -64,6 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+                    log.info("Autenticacion completada con exito");
                 }
             }
 

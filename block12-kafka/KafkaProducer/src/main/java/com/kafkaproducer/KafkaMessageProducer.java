@@ -1,4 +1,4 @@
-package com.block15kafka.configuration.producer;
+package com.kafkaproducer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

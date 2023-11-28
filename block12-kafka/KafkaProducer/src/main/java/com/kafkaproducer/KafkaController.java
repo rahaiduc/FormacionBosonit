@@ -2,9 +2,7 @@ package com.kafkaproducer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class KafkaController {
@@ -13,8 +11,8 @@ public class KafkaController {
 
     private static final String TOPIC = "producer_topic";
 
-    @GetMapping("/send/{message}")
-    public String sendMessage(@PathVariable String message) {
+    @PostMapping("/send")
+    public String sendMessage(@RequestBody String message) {
         kafkaTemplate.send(TOPIC, message);
         return "Sent message: " + message;
     }

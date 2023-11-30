@@ -9,13 +9,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com</groupId>
-    <artifactId>trip</artifactId>
+    <artifactId>trip-frontend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>trip-backend</name>
-    <description>trip-backend</description>
+    <name>trip-frontend</name>
+    <description>trip-frontend</description>
     <properties>
         <java.version>17</java.version>
-        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
     </properties>
     <dependencies>
         <dependency>
@@ -51,16 +50,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${org.mapstruct.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>${org.mapstruct.version}</version>
         </dependency>
     </dependencies>
 

@@ -53,7 +53,7 @@ public class ViajeController {
     }
 
     @GetMapping("/verify/{idViaje}")
-    public String verifyViaje(@PathVariable Integer idViaje){
+    public boolean verifyViaje(@PathVariable Integer idViaje){
         return viajeService.verifyViaje(idViaje);
     }
 }

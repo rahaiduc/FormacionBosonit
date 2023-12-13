@@ -25,9 +25,9 @@ public class Viaje {
     private String destino;
     private String fechaSalida;
     private String fechaLlegada;
-    private String estado;
+    private String estado="abierto";
     @ManyToMany(mappedBy = "viajes")
-    private List<Cliente> pasajeros;
+    private List<Cliente> pasajeros=new ArrayList<>();
 
     public ViajeOutputDto viajeToViajeOutput(){
         List<Integer> list = this.pasajeros.stream().map(Cliente -> Cliente.getId_cliente()).toList();

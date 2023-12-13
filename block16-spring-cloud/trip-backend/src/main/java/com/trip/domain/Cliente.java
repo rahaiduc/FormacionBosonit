@@ -29,7 +29,7 @@ public class Cliente {
     private String email;
     private String telefono;
     @ManyToMany
-    private List<Viaje> viajes;
+    private List<Viaje> viajes=new ArrayList<>();
 
 
     public ClienteOutputDto clienteToClienteOutput(){

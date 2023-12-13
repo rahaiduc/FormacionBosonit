@@ -8,9 +8,11 @@ import com.trip.domain.dto.output.ViajeOutputDto;
 import com.trip.domain.mappers.ClienteMapper;
 import com.trip.repository.ClienteRepository;
 import com.trip.repository.ViajeRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.client.HttpClientErrorException;
 
 
 import java.util.*;
@@ -26,7 +28,11 @@ public class ClienteService {
 
 
     public ClienteOutputDto addCliente(ClienteInputDto clienteInputDto) {
-       return null;
+       if(clienteInputDto.getNombre().isBlank() || clienteInputDto.getEmail().isBlank() || clienteInputDto.getTelefono().isBlank() ||clienteInputDto.getApellido().isBlank()){
+           throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,"Falta datos por introducir");
+       }
+       Cliente cliente=ClienteMapper.INSTANCE.clienteInputToCliente(clienteInputDto);
+       return clienteRepository.save(cliente).clienteToClienteOutput();
     }
 
     public void deleteCliente(int id) {
@@ -40,7 +46,9 @@ public class ClienteService {
 
 
     public ClienteOutputDto updateCliente(Integer id, ClienteInputDto clienteInputDto) {
-        return null;
+        Cliente cliente=clienteRepository.findById(id).orElseThrow(()->new NoSuchElementException("No se encontró el cliente con ID: " + id));
+        ClienteMapper.INSTANCE.updatePatchCliente(clienteInputDto,cliente);
+        return clienteRepository.save(cliente).clienteToClienteOutput();
     }
 
 
